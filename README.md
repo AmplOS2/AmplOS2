@@ -4,11 +4,10 @@ only designed to run on RasPi 3 and 4. PC/… support is "planned"
 (writing the boot code for raspis was already tricky enough).
 
 ## Building
-1. Make sure you have [`sm`](https://github.com/chrissxYT/tools) and
-[Docker](https://www.docker.com) installed
+1. Make sure you have `make` and [Docker](https://www.docker.com) installed
 2. Git clone / Download and extract a ZIP / ...
 3. `cd /path/to/AmplOS2/buildenvs`
-4. `sm raspi` (start the Docker container)
+4. `make raspi` (start the Docker container)
 5. `sm` (build the image in the Docker container)
 6. (optionally) Exit the docker container and test using qemu
 
