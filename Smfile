@@ -14,15 +14,15 @@ kernel {
 }
 
 link {
-        !aarch64-none-elf-ld -T boot/raspi.ld -o anos.elf boot/raspi.o kernel/*.o kernel/*/*.o
+        !aarch64-none-elf-ld -T boot/raspi.ld -o amplos.elf boot/raspi.o kernel/*.o kernel/*/*.o
 }
 
 objcopy {
-        !aarch64-none-elf-objcopy anos.elf -O binary kernel8.img
+        !aarch64-none-elf-objcopy amplos.elf -O binary kernel8.img
 }
 
 clean {
-        !rm -f anos.elf kernel/*.o kernel/*/*.o
+        !rm -f amplos.elf kernel/*.o kernel/*/*.o
 }
 
 elf (boot kernel link) {}
