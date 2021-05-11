@@ -10,5 +10,5 @@ jobs:
       - run: ./build.sh raspi
       - uses: actions/upload-artifact@v2
         with:
-          name: amplos.img
-          path: amplos.img
+          name: kernel8.img
+          path: kernel8.img
