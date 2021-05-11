@@ -5,3 +5,5 @@ RUN curl -L https://github.com/chrissxYT/tools/raw/master/bootstrap | sh
 
 VOLUME /amplos
 WORKDIR /amplos
+
+CMD sm

@@ -6,13 +6,16 @@ only designed to run on RasPi 3 and 4. PC/… support is "planned"
 ## Building
 1. Make sure you have `make` and [Docker](https://www.docker.com) installed
 2. Git clone / Download and extract a ZIP / ...
-3. `cd /path/to/AmplOS2/buildenvs`
-4. `make raspi` (start the Docker container)
-5. `sm` (build the image in the Docker container)
-6. (optionally) Exit the docker container and test using qemu
+3. `cd /path/to/AmplOS2`
+4. `./build.sh raspi` (build the image)
+6. (optionally) test using qemu (if you can build natively, you can use sm test)
 
 ## Why not Rust?
 Rust is a good programming language, but redoxOS already exists.
+
+## Why not Adscript?
+Adscript is cool, but it isn't stable yet. Once it is, it will be used in a few
+places.
 
 ## TODO / Roadmap
 AmplOS already does some great things, but there's still a lot to do:
