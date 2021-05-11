@@ -1,0 +1,14 @@
+name: CI
+
+on: push
+
+jobs:
+  build-raspi:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - run: ./build.sh raspi
+      - uses: actions/upload-artifact@v2
+        with:
+          name: amplos.img
+          path: amplos.img
