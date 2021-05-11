@@ -34,7 +34,7 @@ format {
 }
 
 loc {
-        !cloc --exclude-dir=demoimage .
+        !cloc .
 }
 
 test (all) {

@@ -51,7 +51,6 @@ extern "C" void kmain() {
         assert(gpu.valid());
 
         gpu.draw_picture([](uint32_t x, uint32_t y) { return rgba(x, y, x ^ y, 0xff); });
-        gpu.showdemopicture();
 
         uint64_t end = clock();
 

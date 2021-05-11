@@ -29,21 +29,3 @@ GPU::GPU(uint32_t width, uint32_t height) noexcept {
         } else
                 uart_puts("Can't set screen res\n");
 }
-
-#include <raspi/demoimage/demoimage.h>
-// TODO: get rid of this with some constexpr madness
-const char *dumb;
-
-void GPU::showdemopicture() noexcept {
-        auto draw = [](uint32_t, uint32_t) {
-                char px[4];
-                HEADER_PIXEL(dumb, px);
-                return *((uint32_t *)&px);
-        };
-
-        dumb = cmpt_data;
-        draw_picture(draw, cmpt_width, cmpt_height, 262, 50);
-
-        dumb = ludwig_data;
-        draw_picture(draw, ludwig_width, ludwig_height, 112, 600);
-}

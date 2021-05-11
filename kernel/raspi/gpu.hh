@@ -8,9 +8,6 @@ private:
         uint8_t *buffer;
 
 public:
-        // Show the #included pictures (temporary)
-        void showdemopicture() noexcept;
-
         constexpr inline bool     valid() const { return _valid; }
         constexpr inline uint32_t width() const { return _width; }
         constexpr inline uint32_t height() const { return _height; }
