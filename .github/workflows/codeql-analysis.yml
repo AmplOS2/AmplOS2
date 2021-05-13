@@ -20,16 +20,16 @@ jobs:
       matrix:
         language: [ 'cpp', 'python' ]
 
-    steps:
-    - name: Checkout repository
-      uses: actions/checkout@v2
+    container:
+      image: chrissx/gcc-aarch64-none-elf:11
 
-    - name: Initialize CodeQL
-      uses: github/codeql-action/init@v1
+    steps:
+    - uses: actions/checkout@v2
+
+    - uses: github/codeql-action/init@v1
       with:
         languages: ${{ matrix.language }}
 
-    - run: ./build.sh raspi img
+    - run: sm img
 
-    - name: Perform CodeQL Analysis
-      uses: github/codeql-action/analyze@v1
+    - uses: github/codeql-action/analyze@v1
