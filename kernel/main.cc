@@ -19,7 +19,8 @@
 #endif
 
 #ifdef ANOS_ARM64_RASPI
-uint8_t         f = 1;
+uint8_t f = 1;
+
 extern "C" void kmain() {
         uint64_t start = clock();
         uart_init();
@@ -50,24 +51,38 @@ extern "C" void kmain() {
         GPU gpu;
         assert(gpu.valid());
 
-        gpu.draw_picture([](uint32_t x, uint32_t y) { return rgba(x, y, x ^ y, 0xff); });
+        gpu.draw_picture(
+                [](uint32_t x, uint32_t y, uint32_t) { return rgba(x, y, x ^ y, 0xff); });
+        gpu.draw_text("AmplOS2 is the best operating system ever created by humanity.\n"
+                      "It should be used by everyone sooner rather than later.\n"
+                      "Hello, world!\n"
+                      "Hello, Ludwig!",
+                      0xffffffff,
+                      100,
+                      100);
 
         uint64_t end = clock();
 
-        uart_puts("All of this took ");
+        uart_puts("Initialization took ");
         printf("%d microseconds.\n", end - start);
 
         printf("Allocated 100B each @ %lx & %lx\n", kalloc(100), kalloc(100));
 
-        for(;;) {
-                usleep(3000000);
-                gpu.draw_picture([](uint32_t x, uint32_t y) {
+        for(;; f = (f << 1) | 1) {
+                usleep(500000);
+                gpu.draw_picture([](uint32_t x, uint32_t y, uint32_t) {
                         return rgba(x, y, x ^ y, 0xff) ^
                                rgba(rand() & f, rand() & f, rand() & f, 0);
                 });
+                gpu.draw_text("AmplOS2 is the best operating system ever created by "
+                              "humanity.\n"
+                              "It should be used by everyone sooner rather than later.\n"
+                              "Hello, world!\n"
+                              "Hello, Ludwig!",
+                              0xffffffff,
+                              100,
+                              100);
                 if(f == 0xff) f = 1;
-                f <<= 1;
-                f |= 1;
         }
 }
 #endif
