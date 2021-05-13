@@ -17,7 +17,7 @@ link {
         !aarch64-none-elf-ld -T boot/raspi.ld -o amplos.elf boot/raspi.o kernel/*.o kernel/*/*.o
 }
 
-objcopy {
+img (elf) {
         !aarch64-none-elf-objcopy amplos.elf -O binary kernel8.img
 }
 
@@ -26,7 +26,6 @@ clean {
 }
 
 elf (boot kernel link) {}
-img (elf objcopy) {}
 all (img clean) {}
 
 format {
