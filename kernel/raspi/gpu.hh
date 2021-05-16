@@ -64,8 +64,8 @@ public:
                 while(*str) {
                         // TODO: wchar32_t
                         uint32_t c;
-                        int e;
-                        str = (const char*)utf8_decode((const uint8_t*)str, c, e);
+                        int      e;
+                        str = (const char *)utf8_decode((const uint8_t *)str, c, e);
                         if(e) {
                                 printf("utf8 error: %d\n", e);
                                 return;

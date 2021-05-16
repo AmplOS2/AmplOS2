@@ -29,7 +29,7 @@ elf (boot kernel link) {}
 all (img clean) {}
 
 format {
-        !clang-format -Werror -i --style=file --verbose $(fd '\.(cc|c|hh|h)$' | grep -v font)
+        !clang-format -Werror -i --style=file --verbose $(fd -i -E utf8 '\.(cc|c|hh|h)$' | grep -v font)
 }
 
 loc {
