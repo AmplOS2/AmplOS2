@@ -6,10 +6,7 @@
 #include <abort.hh>
 #include <printf.hh>
 namespace {
-inline void _assert_fail(const char *ass,
-                         const char *file,
-                         unsigned    line,
-                         const char *func) {
+inline void _assert_fail(const char *ass, const char *file, unsigned line, const char *func) {
         printf("anOS: %s:%d: ", file, line);
         if(func) printf("%s: ", func);
         printf("Assertion '%s' failed.\n", ass);
@@ -25,8 +22,7 @@ inline void _assert_fail(const char *ass,
 #define ASSERT_FUNCTION __func__
 #endif
 
-#define assert(expr)             \
-        (static_cast<bool>(expr) \
-                 ? (void)(0)     \
-                 : _assert_fail(#expr, __FILE__, __LINE__, ASSERT_FUNCTION))
+#define assert(expr)                         \
+        (static_cast<bool>(expr) ? (void)(0) \
+                                 : _assert_fail(#expr, __FILE__, __LINE__, ASSERT_FUNCTION))
 #endif

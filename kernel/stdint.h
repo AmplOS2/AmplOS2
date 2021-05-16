@@ -7,8 +7,7 @@ typedef unsigned short uint16_t;
 typedef int            int32_t;
 typedef unsigned       uint32_t;
 
-#if defined(__alpha__) || (defined(__sparc__) && defined(__arch64__)) || \
-        defined(__sparcv9)
+#if defined(__alpha__) || (defined(__sparc__) && defined(__arch64__)) || defined(__sparcv9)
 typedef long               int64_t;
 typedef unsigned long      uint64_t;
 typedef long long          int128_t;

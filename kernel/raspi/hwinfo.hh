@@ -25,9 +25,7 @@ public:
                 uint32_t i = (mmfr0 >> 20) & 0xf;
                 return i == 1 || i == 2;
         }
-        constexpr inline bool stage1_tgran64() const {
-                return ((mmfr0 >> 24) & 0xf) == 0;
-        }
+        constexpr inline bool stage1_tgran64() const { return ((mmfr0 >> 24) & 0xf) == 0; }
 
         constexpr inline bool stage2_tgran4() const {
                 uint32_t i = (mmfr0 >> 40) & 0xf;

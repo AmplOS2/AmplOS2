@@ -11,8 +11,8 @@ GPU::GPU(uint32_t width, uint32_t height) noexcept {
         mbox_cmd(idx, 0x48009, 2, 0, 0);          // set virtual offset
         mbox_cmd(idx, 0x48005, 1, 32, 0);         // set depth
         mbox_cmd(idx, 0x48006, 1, 1, 0);          // set pixel order
-        mbox_cmd(idx, 0x40001, 2, 4096, 0); // get framebuffer & alignment (pointer, size)
-        mbox_cmd(idx, 0x40008, 1, 0, 0);    // get pitch
+        mbox_cmd(idx, 0x40001, 2, 4096, 0);       // get framebuffer & alignment (pointer, size)
+        mbox_cmd(idx, 0x40008, 1, 0, 0);          // get pitch
         mbox_end(idx);
 
         if(mbox_call(MBOX_CH_PROP) && mbox[20] == 32 && mbox[28]) {
