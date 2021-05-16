@@ -1,9 +1,9 @@
 // https://sourceforge.net/p/predef/wiki/Architectures/
-#if defined(__amd64__) || defined(__amd64) || defined(__x86_64__) ||                    \
-        defined(__x86_64) || defined(_M_X64) || defined(_M_AMD64) || defined(i386) ||   \
-        defined(__i386) || defined(__i386__) || defined(__IA32__) || defined(_M_I86) || \
-        defined(_M_IX86) || defined(__X86__) || defined(_X86_) ||                       \
-        defined(__THW_INTEL__) || defined(__I86__) || defined(__INTEL__)
+#if defined(__amd64__) || defined(__amd64) || defined(__x86_64__) || defined(__x86_64) ||   \
+        defined(_M_X64) || defined(_M_AMD64) || defined(i386) || defined(__i386) ||         \
+        defined(__i386__) || defined(__IA32__) || defined(_M_I86) || defined(_M_IX86) ||    \
+        defined(__X86__) || defined(_X86_) || defined(__THW_INTEL__) || defined(__I86__) || \
+        defined(__INTEL__)
 #define ANOS_X86_PC
 #elif defined(__aarch64__)
 #define ANOS_ARM64_RASPI
@@ -31,8 +31,7 @@ extern "C" void kmain() {
         mbox_end(idx);
 
         // send the message to the GPU and receive answer
-        if(mbox_call(MBOX_CH_PROP))
-                printf("My serial number is: %8x%8x\n", mbox[6], mbox[5]);
+        if(mbox_call(MBOX_CH_PROP)) printf("My serial number is: %8x%8x\n", mbox[6], mbox[5]);
         else
                 uart_puts("Unable to query serial!\n");
 
@@ -51,15 +50,14 @@ extern "C" void kmain() {
         GPU gpu;
         assert(gpu.valid());
 
-        gpu.draw_picture(
-                [](uint32_t x, uint32_t y, uint32_t) { return rgba(x, y, x ^ y, 0xff); });
-        gpu.draw_text("AmplOS2 is the best operating system ever created by humanity.\n"
-                      "It should be used by everyone sooner rather than later.\n"
-                      "Hello, world!\n"
-                      "Hello, Ludwig!",
-                      0xffffffff,
-                      100,
-                      100);
+        gpu.draw_picture([](uint32_t x, uint32_t y, uint32_t) { return rgba(x, y, x ^ y, 0xff); });
+        gpu.draw_text_unifont("AmplOS2 is the best operating system ever created by humanity.\n"
+                              "It should be used by everyone sooner rather than later.\n"
+                              "Hello, world!\n"
+                              "Hello, Ludwig!",
+                              rand() | rgba(0xf, 0xf, 0xf, 0xff),
+                              25,
+                              25);
 
         uint64_t end = clock();
 
@@ -74,14 +72,14 @@ extern "C" void kmain() {
                         return rgba(x, y, x ^ y, 0xff) ^
                                rgba(rand() & f, rand() & f, rand() & f, 0);
                 });
-                gpu.draw_text("AmplOS2 is the best operating system ever created by "
-                              "humanity.\n"
-                              "It should be used by everyone sooner rather than later.\n"
-                              "Hello, world!\n"
-                              "Hello, Ludwig!",
-                              0xffffffff,
-                              100,
-                              100);
+                gpu.draw_text_unifont("AmplOS2 is the best operating system ever created by "
+                                      "humanity.\n"
+                                      "It should be used by everyone sooner rather than later.\n"
+                                      "Hello, world!\n"
+                                      "Hello, Ludwig!",
+                                      rand() | rgba(0xf, 0xf, 0xf, 0xff),
+                                      25,
+                                      25);
                 if(f == 0xff) f = 1;
         }
 }

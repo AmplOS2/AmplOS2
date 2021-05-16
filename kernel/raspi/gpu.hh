@@ -1,6 +1,7 @@
 #pragma once
 #include <stdint.h>
 #include <term_font.h>
+#include <unifont.h>
 
 class GPU {
 private:
@@ -30,29 +31,69 @@ public:
                 }
         }
 
-        inline void draw_glyph(char c, uint32_t color, uint32_t x, uint32_t y) {
-                for(int i = 0; i < 11; i++) {
-                        int r = term_font[c * 11 + i];
-                        if(r & 0x80) pixel(x + 0, y + i) = color;
-                        if(r & 0x40) pixel(x + 1, y + i) = color;
-                        if(r & 0x20) pixel(x + 2, y + i) = color;
-                        if(r & 0x10) pixel(x + 3, y + i) = color;
-                        if(r & 0x08) pixel(x + 4, y + i) = color;
-                        if(r & 0x04) pixel(x + 5, y + i) = color;
-                        if(r & 0x02) pixel(x + 6, y + i) = color;
-                        if(r & 0x01) pixel(x + 7, y + i) = color;
+        inline void draw_glyph(int         c,
+                               uint32_t    color,
+                               uint32_t    x,
+                               uint32_t    y,
+                               const char *font,
+                               unsigned    glyph_width,
+                               unsigned    glyph_height,
+                               unsigned    bytes_per_glyph) {
+                for(unsigned i = 0; i < glyph_height; i++) {
+                        for(unsigned k = 0; k * 8 < glyph_width; k++) {
+                                unsigned r = font[bytes_per_glyph * c +
+                                                  i * bytes_per_glyph / glyph_height + k];
+                                for(unsigned j = 0; j < glyph_width - k * 8; j++)
+                                        if(r & (0x80 >> j)) pixel(x + k * 8 + j, y + i) = color;
+                        }
                 }
         }
 
-        void draw_text(const char *str, uint32_t color, uint32_t x, uint32_t y) {
-                x -= 8;
+        inline void draw_text(const char *str,
+                              uint32_t    color,
+                              uint32_t    x,
+                              uint32_t    y,
+                              const char *font,
+                              unsigned    glyph_width,
+                              unsigned    glyph_height,
+                              unsigned    bytes_per_glyph) {
+                x -= glyph_width;
                 auto ox = x;
                 while(*str) {
-                        if(*str == '\n') y += 11, x = ox;
+                        if(*str == '\n') y += glyph_height, x = ox;
                         else
-                                draw_glyph(*str, color, x += 8, y);
+                                draw_glyph(*str,
+                                           color,
+                                           x += glyph_width,
+                                           y,
+                                           font,
+                                           glyph_width,
+                                           glyph_height,
+                                           bytes_per_glyph);
                         str++;
                 }
+        }
+
+        inline void draw_text_term_font(const char *str, uint32_t color, uint32_t x, uint32_t y) {
+                draw_text(str,
+                          color,
+                          x,
+                          y,
+                          term_font,
+                          term_font_glyph_width,
+                          term_font_glyph_height,
+                          term_font_bytes_per_glyph);
+        }
+
+        inline void draw_text_unifont(const char *str, uint32_t color, uint32_t x, uint32_t y) {
+                draw_text(str,
+                          color,
+                          x,
+                          y,
+                          unifont,
+                          unifont_glyph_width,
+                          unifont_glyph_height,
+                          unifont_bytes_per_glyph);
         }
 
         GPU(uint32_t width = 1024, uint32_t height = 768) noexcept;
