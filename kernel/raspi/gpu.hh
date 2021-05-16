@@ -1,7 +1,9 @@
 #pragma once
+#include <printf.hh>
 #include <stdint.h>
 #include <term_font.h>
 #include <unifont.h>
+#include <utf8.hh>
 
 class GPU {
 private:
@@ -60,9 +62,17 @@ public:
                 x -= glyph_width;
                 auto ox = x;
                 while(*str) {
-                        if(*str == '\n') y += glyph_height, x = ox;
+                        // TODO: wchar32_t
+                        uint32_t c;
+                        int e;
+                        str = (const char*)utf8_decode((const uint8_t*)str, c, e);
+                        if(e) {
+                                printf("utf8 error: %d\n", e);
+                                return;
+                        }
+                        if(c == '\n') y += glyph_height, x = ox;
                         else
-                                draw_glyph(*str,
+                                draw_glyph(c,
                                            color,
                                            x += glyph_width,
                                            y,
@@ -70,7 +80,6 @@ public:
                                            glyph_width,
                                            glyph_height,
                                            bytes_per_glyph);
-                        str++;
                 }
         }
 
