@@ -27,6 +27,6 @@ jobs:
       with:
         languages: cpp, python
 
-    - run: sm
+    - run: TARGET=aarch64-none-elf make -j$(nproc)
 
     - uses: github/codeql-action/analyze@v1
