@@ -19,7 +19,7 @@ jobs:
       image: chrissx/gcc-aarch64-none-elf:11
 
     steps:
-    - run: apt install -y python python3-pip
+    - run: apt install -y python python3-pip git
 
     - uses: actions/checkout@v2
       with:
