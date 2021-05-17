@@ -4,7 +4,7 @@ boot {
 
 kernel {
         %SET CPPC aarch64-none-elf-g++
-        %APPEND CPPFLAGS -Wno-unused-function -fno-exceptions -ffreestanding -nostartfiles -c -Ikernel -Iutf8
+        %APPEND CPPFLAGS -Wno-unused-function -fno-exceptions -ffreestanding -nostartfiles -c -Ikernel -Iutf8 -Ifonts
         %CPPC kernel/main.o kernel/main.cc
         %CPPC kernel/printf.o kernel/printf.cc
         %CPPC kernel/pages.o kernel/pages.cc
