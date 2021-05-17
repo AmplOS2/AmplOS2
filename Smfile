@@ -2,7 +2,7 @@ boot {
         !aarch64-none-elf-g++ -ffreestanding -nostdinc -nostdinc++ -nostdlib -nostartfiles -c boot/raspi.S -o boot/raspi.o
 }
 
-kernel {
+kernel (fonts) {
         %SET CPPC aarch64-none-elf-g++
         %APPEND CPPFLAGS -Wno-unused-function -fno-exceptions -ffreestanding -nostartfiles -c -Ikernel -Iutf8 -Ifonts
         %CPPC kernel/main.o kernel/main.cc
@@ -11,6 +11,10 @@ kernel {
         %CPPC kernel/raspi/mbox.o kernel/raspi/mbox.cc
         %CPPC kernel/raspi/gpu.o kernel/raspi/gpu.cc
         %CPPC kernel/raspi/uart0.o kernel/raspi/uart0.cc
+}
+
+fonts {
+        !cd fonts && ./run_natively
 }
 
 link {
