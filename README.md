@@ -23,10 +23,12 @@ AmplOS already does some great things, but there's still a lot to do:
 * Some File System (probably [FAT](https://github.com/AmplOS2/ampfat))
 * `aport` on macOS and Linux
 * Memory Management, obviously
+* USB support
 * Processes, System Calls, IPC
 * Port a C library (probably `dietlibc`) and
 compiler (`clang`, `gcc`, `lcc`, ...)
-* `aport` on anOS
+* Users/Groups
+* `aport` on AmplOS
 * Port a shell (`ash`, `dash`, `ksh`, ...) and
 editor (`nano`, `ed`, `that_editor`, ...)
 * Port [`doas`](https://github.com/AmplOS2/doas), instead of reinventing the
