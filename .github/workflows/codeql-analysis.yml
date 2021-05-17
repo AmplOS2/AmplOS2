@@ -15,11 +15,6 @@ jobs:
       contents: read
       security-events: write
 
-    strategy:
-      fail-fast: false
-      matrix:
-        language: [ 'cpp', 'python' ]
-
     container:
       image: chrissx/gcc-aarch64-none-elf:11
 
@@ -30,8 +25,8 @@ jobs:
 
     - uses: github/codeql-action/init@v1
       with:
-        languages: ${{ matrix.language }}
+        languages: cpp, python
 
-    - run: sm img
+    - run: sm
 
     - uses: github/codeql-action/analyze@v1
