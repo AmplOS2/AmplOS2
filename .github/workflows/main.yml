@@ -3,10 +3,11 @@ name: CI
 on: push
 
 jobs:
-  build-raspi:
+  'Build RasPi':
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+        submodules: recursive
       - run: ./build.sh raspi
       - uses: actions/upload-artifact@v2
         with:
