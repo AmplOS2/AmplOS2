@@ -12,10 +12,6 @@ KOBJS = $(KSRCS:.cc=.o) boot/raspi.o
 
 FONTS = fonts/unifont.h fonts/term_font.h
 
-# a little note: actually kernel/raspi/gpu.hh would have to have a dependency on
-#                fonts/*.h, but that isnt really a concern since the fonts dont
-#                change at all really
-
 all: kernel8.img
 
 %.o: %.cc $(FONTS)
