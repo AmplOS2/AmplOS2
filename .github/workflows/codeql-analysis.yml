@@ -22,11 +22,13 @@ jobs:
     - run: apt install -y python python3-pip
 
     - uses: actions/checkout@v2
+      with:
+        submodules: recursive
 
     - uses: github/codeql-action/init@v1
       with:
         languages: cpp, python
 
-    - run: TARGET=aarch64-none-elf make -j$(nproc)
+    - run: sm
 
     - uses: github/codeql-action/analyze@v1
