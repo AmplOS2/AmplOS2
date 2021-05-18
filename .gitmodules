@@ -4,3 +4,6 @@
 [submodule "fonts"]
 	path = fonts
 	url = https://github.com/AmplOS2/ampfct.git
+[submodule "psf"]
+	path = psf
+	url = https://github.com/AmplOS2/libpsf.git

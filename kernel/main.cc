@@ -76,11 +76,8 @@ extern "C" void kmain() {
                                       "humanity.\n"
                                       "It should be used by everyone sooner rather than later.\n"
                                       "Hello, world!\n"
-                                      "Hello, Ludwig!\n"
-                                      "Hä, wo kommt auf einmal dieser Unicode-Support her?!\n"
-                                      "Je tu Pokémon, chtěl bych ho zničit, jo!\n"
-                                      "私の父はケクです",
-                                      rand() | rgba(0xf, 0xf, 0xf, 0xff),
+                                      "Hello, Ludwig!" rand() |
+                                              rgba(0xf, 0xf, 0xf, 0xff),
                                       25,
                                       600);
                 if(f == 0xff) f = 1;

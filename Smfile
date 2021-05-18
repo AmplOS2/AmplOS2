@@ -20,6 +20,10 @@ loc {
         !cloc .
 }
 
+update {
+       !git submodule foreach git pull
+}
+
 test (all) {
         # Append -s and -S to be able to use gdb
         !qemu-system-aarch64 -M raspi3 -serial stdio -kernel kernel8.img

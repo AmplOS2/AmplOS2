@@ -1,8 +1,8 @@
 #pragma once
+#include <fonts/unifont.psf.h>
 #include <printf.hh>
+#include <psf.hh>
 #include <stdint.h>
-#include <term_font.h>
-#include <unifont.h>
 #include <utf8.hh>
 
 class GPU {
@@ -33,19 +33,16 @@ public:
                 }
         }
 
-        inline void draw_glyph(int         c,
-                               uint32_t    color,
-                               uint32_t    x,
-                               uint32_t    y,
-                               const char *font,
-                               unsigned    glyph_width,
-                               unsigned    glyph_height,
-                               unsigned    bytes_per_glyph) {
-                for(unsigned i = 0; i < glyph_height; i++) {
-                        for(unsigned k = 0; k * 8 < glyph_width; k++) {
-                                unsigned r = font[bytes_per_glyph * c +
-                                                  i * bytes_per_glyph / glyph_height + k];
-                                for(unsigned j = 0; j < glyph_width - k * 8; j++)
+        inline void draw_glyph(uint32_t   c,
+                               uint32_t   color,
+                               uint32_t   x,
+                               uint32_t   y,
+                               psf::font &font) {
+                uint8_t *glyph = font.glyph(c);
+                for(unsigned i = 0; i < font.height; i++) {
+                        for(unsigned k = 0; k * 8 < font.width; k++) {
+                                unsigned r = glyph[i * font.glyphsize / font.height + k];
+                                for(unsigned j = 0; j < font.width - k * 8; j++)
                                         if(r & (0x80 >> j)) pixel(x + k * 8 + j, y + i) = color;
                         }
                 }
@@ -55,14 +52,10 @@ public:
                               uint32_t    color,
                               uint32_t    x,
                               uint32_t    y,
-                              const char *font,
-                              unsigned    glyph_width,
-                              unsigned    glyph_height,
-                              unsigned    bytes_per_glyph) {
-                x -= glyph_width;
+                              psf::font & font) {
+                x -= font.width;
                 auto ox = x;
                 while(*str) {
-                        // TODO: wchar32_t
                         uint32_t c;
                         int      e;
                         str = (const char *)utf8_decode((const uint8_t *)str, c, e);
@@ -70,44 +63,21 @@ public:
                                 printf("utf8 error: %d\n", e);
                                 return;
                         }
-                        if(c == '\n') y += glyph_height, x = ox;
+                        if(c == '\n') y += font.height, x = ox;
                         else
-                                draw_glyph(c,
-                                           color,
-                                           x += glyph_width,
-                                           y,
-                                           font,
-                                           glyph_width,
-                                           glyph_height,
-                                           bytes_per_glyph);
+                                draw_glyph(c, color, x += font.width, y, font);
                 }
         }
 
-        inline void draw_text_term_font(const char *str, uint32_t color, uint32_t x, uint32_t y) {
-                draw_text(str,
-                          color,
-                          x,
-                          y,
-                          term_font,
-                          term_font_glyph_width,
-                          term_font_glyph_height,
-                          term_font_bytes_per_glyph);
-        }
-
         inline void draw_text_unifont(const char *str, uint32_t color, uint32_t x, uint32_t y) {
-                draw_text(str,
-                          color,
-                          x,
-                          y,
-                          unifont,
-                          unifont_glyph_width,
-                          unifont_glyph_height,
-                          unifont_bytes_per_glyph);
+                auto unifont = psf::font((uint8_t *)unifont_psf);
+                unifont.parse();
+                draw_text(str, color, x, y, unifont);
         }
 
         GPU(uint32_t width = 1024, uint32_t height = 768) noexcept;
 };
 
-constexpr inline uint32_t rgba(uint8_t r, uint8_t g, uint8_t b, uint8_t a) {
+constexpr static inline uint32_t rgba(uint8_t r, uint8_t g, uint8_t b, uint8_t a) {
         return r | (g << 8) | (b << 16) | (a << 24);
 }
