@@ -1,10 +1,10 @@
-CXX     = $(TARGET)-g++
-LD      = $(TARGET)-ld
-OBJCOPY = $(TARGET)-objcopy
+CXX     = clang++ --target=$(TARGET)
+LD      = ld.lld
+OBJCOPY = objcopy
 
-CXXFLAGS  = -Wall -Wextra -pedantic -std=c++2a -O3 -s
-CXXFLAGS += -Wno-unused-function -fno-exceptions -ffreestanding -nostartfiles -Ikernel -Iutf8 -I. -Ipsf
-LDFLAGS   = -flto
+CXXFLAGS  = -Wall -Wextra -pedantic -std=c++2a -O3
+CXXFLAGS += -Wno-unused-function -fno-exceptions -ffreestanding -Ikernel -Iutf8 -I. -Ipsf
+LDFLAGS   = -flto -nostartfiles --static -x
 
 KSRCS = kernel/main.cc kernel/printf.cc kernel/pages.cc \
 		kernel/raspi/mbox.cc kernel/raspi/gpu.cc kernel/raspi/uart0.cc
@@ -25,6 +25,7 @@ fonts/%.psf.h: fonts/%.psf
 
 amplos.elf: $(FONTS) $(KOBJS)
 	$(LD) -T boot/raspi.ld -o amplos.elf $(KOBJS)
+	strip amplos.elf
 
 kernel8.img: amplos.elf
 	$(OBJCOPY) amplos.elf -O binary kernel8.img
