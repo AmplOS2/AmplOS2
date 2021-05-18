@@ -76,8 +76,8 @@ extern "C" void kmain() {
                                       "humanity.\n"
                                       "It should be used by everyone sooner rather than later.\n"
                                       "Hello, world!\n"
-                                      "Hello, Ludwig!" rand() |
-                                              rgba(0xf, 0xf, 0xf, 0xff),
+                                      "Hello, Ludwig!",
+                                      rand() | rgba(0xf, 0xf, 0xf, 0xff),
                                       25,
                                       600);
                 if(f == 0xff) f = 1;
