@@ -2,8 +2,12 @@ raspi {
         !TARGET=aarch64-none-elf make -j$(nproc)
 }
 
+full-clean (clean) {
+        !rm -f fonts/*.h
+}
+
 clean {
-        !rm -f amplos.elf kernel8.img kernel/*.o kernel/*/*.o fonts/*.h
+        !rm -f amplos.elf kernel8.img kernel/*.o kernel/*/*.o
 }
 
 all (raspi) {}

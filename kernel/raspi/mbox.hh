@@ -1,7 +1,7 @@
 #pragma once
 #include <mem.hh>
 #include <raspi/mmio.hh>
-#include <stdint.h>
+#include <stddef.h>
 
 #define MBOX_REQUEST 0
 

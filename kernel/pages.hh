@@ -1,5 +1,5 @@
 #pragma once
-#include <stdint.h>
+#include <stddef.h>
 #define PAGE_SIZE 0x1000
 
 void *k_page_alloc(size_t count);
