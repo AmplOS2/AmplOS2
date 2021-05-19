@@ -4,11 +4,22 @@ only designed to run on RasPi 3 and 4. PC/… support is "planned"
 (writing the boot code for raspis was already tricky enough).
 
 ## Building
-1. Make sure you have `make` and [Docker](https://www.docker.com) installed
-2. Git clone / Download and extract a ZIP / ...
+1. Make sure you have [Docker](https://www.docker.com) installed
+2. Git clone (remember to check that submodules are initialized)
 3. `cd /path/to/AmplOS2`
-4. `./build.sh raspi` (build the image)
+4. `./build raspi` (build the image)
 6. (optionally) test using qemu (if you can build natively, you can use sm test)
+
+## Dependencies
+If you use the Docker-based `build` and `buildenv` scripts, dependencies are
+managed automatically. If you want to build natively on your Host OS, you will
+have to install the following dependencies:
+* [`sm`](https://github.com/chrissxYT/tools)
+* [`make`](https://www.gnu.org/software/make/)
+* [`binutils`](https://www.gnu.org/software/binutils/)
+* [`clang`](https://clang.llvm.org)
+* [`lld`](https://lld.llvm.org)
+* [`python3`](https://www.python.org)
 
 ## Why not Rust?
 Rust is a good programming language, but redoxOS already exists.
