@@ -10,26 +10,29 @@ KSRCS = kernel/main.cc kernel/printf.cc kernel/pages.cc \
 		kernel/raspi/mbox.cc kernel/raspi/gpu.cc kernel/raspi/uart0.cc
 KOBJS = $(KSRCS:.cc=.o) boot/raspi.o
 
-FONTS = fonts/unifont.psf.h
-
 all: raspi
 
 raspi: kernel8.img
 
-%.o: %.cc $(FONTS)
+%.o: %.cc fonts/unifont.psf.h
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
 %.o: %.S
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
 fonts/%.psf.h: fonts/%.psf
-	cd fonts && ./bin2h $*.psf
+	cd fonts && ../scripts/bin2h $*.psf
 
-amplos.elf: $(FONTS) $(KOBJS)
+amplos.elf: fonts/unifont.psf.h $(KOBJS)
 	$(LD) $(LDFLAGS) -T boot/raspi.ld -o amplos.elf $(KOBJS)
 
 kernel8.img: amplos.elf
 	$(OBJCOPY) amplos.elf -S -O binary kernel8.img
+
+fonts/unifont.psf:
+	mkdir -p fonts
+	curl -Lo fonts/unifont.psf.gz http://unifoundry.com/pub/unifont/unifont-13.0.06/font-builds/Unifont-APL8x16-13.0.06.psf.gz
+	gunzip fonts/unifont.psf.gz
 
 loc:
 	cloc .
@@ -43,6 +46,6 @@ update:
 	clang-format -Werror -i --style=file --verbose $$(fd -i -E utf8 '\.(cc|c|hh|h)$$' | grep -v font)
 
 clean:
-	rm -f amplos.elf kernel8.img kernel/*.o kernel/*/*.o fonts/*.h
+	rm -f amplos.elf kernel8.img kernel/*.o kernel/*/*.o unifont.psf.h
 
 .PHONY: all raspi loc test update clean
