@@ -1,4 +1,4 @@
-CXX     = clang++ --target=$(TARGET)
+CXX     = clang++ --target=aarch64-none-elf
 LD      = ld.lld
 OBJCOPY = llvm-objcopy
 
@@ -12,7 +12,9 @@ KOBJS = $(KSRCS:.cc=.o) boot/raspi.o
 
 FONTS = fonts/unifont.psf.h
 
-all: kernel8.img
+all: raspi
+
+raspi: kernel8.img
 
 %.o: %.cc $(FONTS)
 	$(CXX) $(CXXFLAGS) -c $< -o $@
@@ -28,3 +30,19 @@ amplos.elf: $(FONTS) $(KOBJS)
 
 kernel8.img: amplos.elf
 	$(OBJCOPY) amplos.elf -S -O binary kernel8.img
+
+loc:
+	cloc .
+
+# Append -s and -S to be able to use gdb
+test: raspi
+	qemu-system-aarch64 -M raspi3 -serial stdio -kernel kernel8.img
+
+update:
+	git submodule foreach git pull
+	clang-format -Werror -i --style=file --verbose $$(fd -i -E utf8 '\.(cc|c|hh|h)$' | grep -v font)
+
+clean:
+	rm -f amplos.elf kernel8.img kernel/*.o kernel/*/*.o fonts/*.h
+
+.PHONY: all raspi loc test update clean

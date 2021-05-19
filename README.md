@@ -14,7 +14,6 @@ only designed to run on RasPi 3 and 4. PC/… support is "planned"
 If you use the Docker-based `build` and `buildenv` scripts, dependencies are
 managed automatically. If you want to build natively on your Host OS, you will
 have to install the following dependencies:
-* [`sm`](https://github.com/chrissxYT/tools)
 * [`make`](https://www.gnu.org/software/make/)
 * [`coreutils`](https://www.gnu.org/software/coreutils/)
 * [`python3`](https://www.python.org)
