@@ -40,7 +40,7 @@ test: raspi
 
 update:
 	git submodule foreach git pull
-	clang-format -Werror -i --style=file --verbose $$(fd -i -E utf8 '\.(cc|c|hh|h)$' | grep -v font)
+	clang-format -Werror -i --style=file --verbose $$(fd -i -E utf8 '\.(cc|c|hh|h)$$' | grep -v font)
 
 clean:
 	rm -f amplos.elf kernel8.img kernel/*.o kernel/*/*.o fonts/*.h
