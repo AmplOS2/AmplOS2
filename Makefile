@@ -1,6 +1,6 @@
 CXX     = clang++ --target=$(TARGET)
 LD      = ld.lld
-OBJCOPY = objcopy
+OBJCOPY = llvm-objcopy
 
 CXXFLAGS  = -Wall -Wextra -pedantic -std=c++2a -O3
 CXXFLAGS += -Wno-unused-function -fno-exceptions -ffreestanding -Ikernel -Iutf8 -I. -Ipsf
@@ -27,4 +27,4 @@ amplos.elf: $(FONTS) $(KOBJS)
 	$(LD) $(LDFLAGS) -T boot/raspi.ld -o amplos.elf $(KOBJS)
 
 kernel8.img: amplos.elf
-	$(OBJCOPY) amplos.elf -O binary kernel8.img
+	$(OBJCOPY) amplos.elf -S -O binary kernel8.img

@@ -17,6 +17,7 @@ have to install the following dependencies:
 * [`sm`](https://github.com/chrissxYT/tools)
 * [`make`](https://www.gnu.org/software/make/)
 * [`binutils`](https://www.gnu.org/software/binutils/)
+* [`llvm`](https://llvm.org)
 * [`clang`](https://clang.llvm.org)
 * [`lld`](https://lld.llvm.org)
 * [`python3`](https://www.python.org)
