@@ -6,15 +6,15 @@ CXXFLAGS  = -Wall -Wextra -pedantic -std=c++2a -O3
 CXXFLAGS += -Wno-unused-function -fno-exceptions -ffreestanding -Ikernel -Iutf8 -I. -Ipsf
 LDFLAGS   = --static -x -s
 
-KSRCS = kernel/main.cc kernel/printf.cc kernel/pages.cc \
-		kernel/raspi/mbox.cc kernel/raspi/gpu.cc kernel/raspi/uart0.cc
+KHDRS = $(wildcard kernel/*.hh) $(wildcard kernel/*.h) $(wildcard kernel/*/*.hh)
+KSRCS = $(wildcard kernel/*.cc) $(wildcard kernel/*/*.cc)
 KOBJS = $(KSRCS:.cc=.o) boot/raspi.o
 
 all: raspi
 
 raspi: kernel8.img
 
-%.o: %.cc fonts/unifont.psf.h
+%.o: %.cc fonts/unifont.psf.h $(KHDRS)
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
 %.o: %.S
@@ -43,9 +43,9 @@ test: raspi
 
 update:
 	git submodule foreach git pull
-	clang-format -Werror -i --style=file --verbose $$(fd -i -E utf8 '\.(cc|c|hh|h)$$' | grep -v font)
+	clang-format -Werror -i --style=file --verbose $(KSRCS) $(KHDRS)
 
 clean:
-	rm -f amplos.elf kernel8.img kernel/*.o kernel/*/*.o unifont.psf.h
+	rm -f amplos.elf kernel8.img $(KOBJS) unifont.psf.h
 
 .PHONY: all raspi loc test update clean
