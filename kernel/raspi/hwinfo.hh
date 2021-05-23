@@ -2,6 +2,7 @@
 #include <stdint.h>
 
 // TODO: read a lot of docs and figure out wheather the isb is actually needed
+// TODO: figure out if there's any way we can make using this a one-liner
 #define mrs_to_var(reg, var) asm volatile("isb; mrs %0, " reg : "=r"(var))
 
 class MemoryModel {
@@ -9,7 +10,7 @@ private:
         uint64_t mmfr0, mmfr1;
 
 public:
-        inline MemoryModel() noexcept {
+        inline MemoryModel() {
                 mrs_to_var("ID_AA64MMFR0_EL1", mmfr0);
                 mrs_to_var("ID_AA64MMFR1_EL1", mmfr1);
         }
@@ -82,5 +83,11 @@ static inline uint32_t cpufrequency() {
         uint64_t i;
         mrs_to_var("CNTFRQ_EL0", i);
         return i & 0xffffffff;
+}
+
+static inline uint_fast8_t current_el() {
+        uint64_t i;
+        mrs_to_var("CurrentEL", i);
+        return (i & 0b1100) >> 2;
 }
 }

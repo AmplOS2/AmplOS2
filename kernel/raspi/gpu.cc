@@ -2,7 +2,7 @@
 #include <raspi/mbox.hh>
 #include <raspi/uart0.hh>
 
-GPU::GPU(uint32_t width, uint32_t height) noexcept {
+GPU::GPU(uint32_t width, uint32_t height) {
         this->_valid = false;
 
         size_t idx = mbox_start(35);

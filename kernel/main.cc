@@ -46,6 +46,8 @@ extern "C" void kmain() {
         printf("64k granules %ssupported.\n", memmod.stage1_tgran64() ? "" : "not ");
 
         printf("CPU frequency: %dMHz\n", cpufrequency() / 1000000);
+        // TODO: actually check if the bootloader did stupid shit
+        printf("Kernel running at EL%d, that is very good.\n", current_el());
 
         GPU gpu;
         assert(gpu.valid());

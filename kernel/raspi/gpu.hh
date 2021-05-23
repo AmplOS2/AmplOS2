@@ -75,7 +75,7 @@ public:
                 draw_text(str, color, x, y, unifont);
         }
 
-        GPU(uint32_t width = 1024, uint32_t height = 768) noexcept;
+        GPU(uint32_t width = 1024, uint32_t height = 768);
 };
 
 constexpr static inline uint32_t rgba(uint8_t r, uint8_t g, uint8_t b, uint8_t a) {
