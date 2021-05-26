@@ -21,6 +21,8 @@
 #ifdef ANOS_ARM64_RASPI
 uint8_t f = 1;
 
+extern "C" int adscript_is_cool();
+
 extern "C" void kmain() {
         uint64_t start = clock();
         uart_init();
@@ -67,6 +69,8 @@ extern "C" void kmain() {
         printf("%d microseconds.\n", end - start);
 
         printf("Allocated 100B each @ %lx & %lx\n", kalloc(100), kalloc(100));
+
+        adscript_is_cool();
 
         for(;; f = (f << 1) | 1) {
                 usleep(500000);

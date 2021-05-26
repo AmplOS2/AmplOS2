@@ -1,6 +1,7 @@
-CXX     = clang++ --target=aarch64-none-elf
-LD      = ld.lld
-OBJCOPY = llvm-objcopy
+CXX      = clang++ --target=aarch64-none-elf
+LD       = ld.lld
+OBJCOPY  = llvm-objcopy
+ADSCRIPT = adscript -t aarch64-none-elf
 
 CXXFLAGS  = -Wall -Wextra -pedantic -std=c++2a -O3
 CXXFLAGS += -Wno-unused-function -fno-exceptions -ffreestanding -Ikernel -Iutf8 -I. -Ipsf
@@ -8,7 +9,8 @@ LDFLAGS   = --static -x -s
 
 KHDRS = $(wildcard kernel/*.hh) $(wildcard kernel/*.h) $(wildcard kernel/*/*.hh)
 KSRCS = $(wildcard kernel/*.cc) $(wildcard kernel/*/*.cc)
-KOBJS = $(KSRCS:.cc=.o) boot/raspi.o
+ADSRC = $(wildcard kernel/*.adscript)
+KOBJS = $(KSRCS:.cc=.o) $(ADSRC:.adscript=.o) boot/raspi.o
 
 all: raspi
 
@@ -19,6 +21,9 @@ raspi: kernel8.img
 
 %.o: %.S
 	$(CXX) $(CXXFLAGS) -c $< -o $@
+
+%.o: %.adscript
+	$(ADSCRIPT) -o $@ $<
 
 fonts/%.psf.h: fonts/%.psf
 	cd fonts && ../scripts/bin2h $*.psf
