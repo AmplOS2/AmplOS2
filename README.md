@@ -4,23 +4,26 @@ only designed to run on RasPi 3 and 4. PC/… support is "planned"
 (writing the boot code for raspis was already tricky enough).
 
 ## Building
-1. Make sure you have [Docker](https://www.docker.com) installed
+1. Make sure you have all of the dependencies installed
 2. Git clone (remember to check that submodules are initialized)
 3. `cd /path/to/AmplOS2`
-4. `./build raspi` (or `make -j$(nproc) raspi` to build natively)
-6. (optionally) test using qemu (if you can build natively, you can use sm test)
+4. `make -j$(nproc) raspi`
+6. (optionally) `make test`
+
+If you want automatically managed dependencies, you can also use `./build raspi`
+instead of step 4. That uses Docker to build in an independent environment.
 
 ## Dependencies
 If you use the Docker-based `build` and `buildenv` scripts, dependencies are
 managed automatically. If you want to build natively on your Host OS, you will
 have to install the following dependencies:
 * [`curl`](https://curl.se)
-* [`make`](https://www.gnu.org/software/make/)
-* [`coreutils`](https://www.gnu.org/software/coreutils/)
+* POSIX [`make`](https://www.gnu.org/software/make/) and
+[`coreutils`](https://www.gnu.org/software/coreutils/)
 * [`python3`](https://www.python.org)
-* [`llvm`](https://llvm.org)
-* [`clang`](https://clang.llvm.org)
-* [`lld`](https://lld.llvm.org)
+* [`llvm`](https://llvm.org) with [`clang`](https://clang.llvm.org) and
+[`lld`](https://lld.llvm.org)
+* [`qemu`](https://www.qemu.org) (for testing)
 
 ## Why not Rust?
 Rust is a good programming language, but redoxOS already exists.
