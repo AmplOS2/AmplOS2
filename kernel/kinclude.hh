@@ -13,4 +13,4 @@
 #include <pc/pc.hh>
 #endif
 
-#include <printf.hh>
+#include <syslog.hh>

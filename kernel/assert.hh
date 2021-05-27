@@ -4,12 +4,12 @@
 #define assert(expr)
 #else
 #include <abort.hh>
-#include <printf.hh>
+#include <syslog.hh>
 namespace {
 inline void _assert_fail(const char *ass, const char *file, unsigned line, const char *func) {
-        printf("anOS: %s:%d: ", file, line);
-        if(func) printf("%s: ", func);
-        printf("Assertion '%s' failed.\n", ass);
+        syslog << "anOS: " << file << ":" << line << ": ";
+        if(func) syslog << func << ": ";
+        syslog << "Assertion '" << ass << "' failed.\n";
         abort();
 }
 }

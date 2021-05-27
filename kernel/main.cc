@@ -32,24 +32,21 @@ extern "C" void kmain() {
         mbox_cmd(idx, MBOX_TAG_GETSERIAL, 2, 0, 0);
         mbox_end(idx);
 
-        // send the message to the GPU and receive answer
-        if(mbox_call(MBOX_CH_PROP)) printf("My serial number is: %8x%8x\n", mbox[6], mbox[5]);
-        else
-                uart_puts("Unable to query serial!\n");
+        if(!mbox_call(MBOX_CH_PROP)) uart_puts("Unable to query serial!\n");
 
         srand();
-        printf("Random number: %8x\n", rand());
+        syslog << "Random number: " << syslog_hex << rand() << "\n";
 
         MemoryModel memmod;
-        printf("physical address space: %d bits\n", memmod.pa_range());
+        syslog << "physical address space: " << memmod.pa_range() << " bits\n";
 
-        printf("4k granules %ssupported.\n", memmod.stage1_tgran4() ? "" : "not ");
-        printf("16k granules %ssupported.\n", memmod.stage1_tgran16() ? "" : "not ");
-        printf("64k granules %ssupported.\n", memmod.stage1_tgran64() ? "" : "not ");
+        syslog << "4k granules " << (memmod.stage1_tgran4() ? "" : "not ") << "supported.\n";
+        syslog << "16k granules " << (memmod.stage1_tgran16() ? "" : "not ") << "supported.\n";
+        syslog << "64k granules " << (memmod.stage1_tgran64() ? "" : "not ") << "supported.\n";
 
-        printf("CPU frequency: %dMHz\n", cpufrequency() / 1000000);
+        syslog << "CPU frequency: " << (cpufrequency() / 1000000) << "MHz\n";
         // TODO: actually check if the bootloader did stupid shit
-        printf("Kernel running at EL%d, that is very good.\n", current_el());
+        syslog << "Kernel running at EL" << current_el() << ", that is very good.\n";
 
         GPU gpu;
         assert(gpu.valid());
@@ -65,10 +62,10 @@ extern "C" void kmain() {
 
         uint64_t end = clock();
 
-        uart_puts("Initialization took ");
-        printf("%d microseconds.\n", end - start);
+        syslog << "Initialization took " << (end - start) << " microseconds.\n";
 
-        printf("Allocated 100B each @ %lx & %lx\n", kalloc(100), kalloc(100));
+        syslog << "Allocated 100B each @ " << kalloc(100) << " & "
+               << kalloc(100) << "\n";
 
         adscript_is_cool();
 

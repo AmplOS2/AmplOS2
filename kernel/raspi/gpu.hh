@@ -1,8 +1,8 @@
 #pragma once
 #include <fonts/unifont.psf.h>
-#include <printf.hh>
 #include <psf.hh>
 #include <stdint.h>
+#include <syslog.hh>
 #include <utf8.hh>
 
 class GPU {
@@ -60,7 +60,7 @@ public:
                         int      e;
                         str = (const char *)utf8_decode((const uint8_t *)str, c, e);
                         if(e) {
-                                printf("utf8 error: %d\n", e);
+                                syslog << "utf8 error: " << e << "\n";
                                 return;
                         }
                         if(c == '\n') y += font.height, x = ox;
