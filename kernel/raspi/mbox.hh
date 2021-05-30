@@ -62,7 +62,7 @@ static constexpr inline void mbox_cmd(size_t &       idx,
                                       const uint32_t cmd,
                                       const uint32_t len,
                                       const uint32_t arg1,
-                                      const uint32_t arg2) {
+                                      const uint32_t arg2 = 0) {
         // static_assert(len == 1 || len == 2);
         mbox[idx++] = cmd;
         mbox[idx++] = len * sizeof(uint32_t);

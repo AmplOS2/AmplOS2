@@ -57,9 +57,9 @@ public:
                 }
         }
 
-                inline _syslog_impl &operator<<(void *p) {
-                        return operator<<(syslog_hex).putuint((uintptr_t)p);
-                }
+        inline _syslog_impl &operator<<(void *p) {
+                return operator<<(syslog_hex).putuint((uintptr_t)p);
+        }
 
         inline _syslog_impl operator<<(_syslog_int_format i_f) { return _syslog_impl(i_f); }
 };
