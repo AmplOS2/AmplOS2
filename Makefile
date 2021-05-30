@@ -46,11 +46,13 @@ loc:
 test: raspi
 	qemu-system-aarch64 -M raspi3 -serial stdio -kernel kernel8.img
 
-update:
+update: format
 	git submodule foreach git pull
+
+format:
 	clang-format -Werror -i --style=file --verbose $(KSRCS) $(KHDRS)
 
 clean:
 	rm -f amplos.elf kernel8.img $(KOBJS) unifont.psf.h
 
-.PHONY: all raspi loc test update clean
+.PHONY: all raspi loc test update clean format

@@ -1,6 +1,7 @@
 #pragma once
 #include <fonts/unifont.psf.h>
 #include <graphics.hh>
+#include <kalloc.hh>
 #include <psf.hh>
 #include <raspi/mbox.hh>
 #include <raspi/uart0.hh>
@@ -12,18 +13,18 @@ namespace {
 class GPU {
 private:
         bool                                                  _valid;
-        graphics::buffer<graphics::row_major, graphics::RGBA> buffer;
+        graphics::buffer<graphics::row_major, graphics::RGBA> front_buffer, back_buffer;
 
 public:
         constexpr inline bool     valid() const { return _valid; }
-        constexpr inline uint32_t width() const { return buffer.w; }
-        constexpr inline uint32_t height() const { return buffer.h; }
-        inline uint32_t &         pixel(uint32_t x, uint32_t y) const { return buffer.pixel(x, y); }
-        inline void               draw_picture(uint32_t (*f)(uint32_t, uint32_t, uint32_t),
-                                               uint32_t width    = 0,
-                                               uint32_t height   = 0,
-                                               uint32_t offset_x = 0,
-                                               uint32_t offset_y = 0) {
+        constexpr inline uint32_t width() const { return front_buffer.w; }
+        constexpr inline uint32_t height() const { return front_buffer.h; }
+        inline uint32_t &pixel(uint32_t x, uint32_t y) const { return back_buffer.pixel(x, y); }
+        inline void      draw_picture(uint32_t (*f)(uint32_t, uint32_t, uint32_t),
+                                      uint32_t width    = 0,
+                                      uint32_t height   = 0,
+                                      uint32_t offset_x = 0,
+                                      uint32_t offset_y = 0) {
                 if(width == 0) width = this->width();
                 if(height == 0) height = this->height();
                 for(uint32_t y = 0; y < height; y++) {
@@ -76,6 +77,9 @@ public:
                 draw_text(str, color, x, y, unifont);
         }
 
+        // currently this just copies, which is not at all how you *should* do it
+        inline void swap_buffers() { back_buffer.copy_to(front_buffer); }
+
         GPU(uint32_t width = 1024, uint32_t height = 768) {
                 _valid = false;
 
@@ -97,7 +101,14 @@ public:
                         uint32_t h = mbox[6];
                         //                  GPU has different addrs, idk
                         uint32_t *b = (uint32_t *)((uintptr_t)mbox[28] & 0x3FFFFFFF);
-                        buffer = graphics::buffer<graphics::row_major, graphics::RGBA>(b, w, h);
+                        front_buffer =
+                                graphics::buffer<graphics::row_major, graphics::RGBA>(b, w, h);
+                        back_buffer =
+                                graphics::buffer<graphics::row_major,
+                                                 graphics::RGBA>((uint32_t *)kalloc(
+                                                                         w * h * sizeof(uint32_t)),
+                                                                 w,
+                                                                 h);
                         _valid = true;
                 } else
                         uart_puts("Can't set screen res\n");

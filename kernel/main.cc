@@ -59,6 +59,7 @@ extern "C" void kmain() {
                               rand() | rgba(0xf, 0xf, 0xf, 0xff),
                               25,
                               600);
+        gpu.swap_buffers();
 
         uint64_t end = clock();
 
@@ -82,6 +83,7 @@ extern "C" void kmain() {
                                       rand() | rgba(0xf, 0xf, 0xf, 0xff),
                                       25,
                                       600);
+                gpu.swap_buffers();
                 if(f == 0xff) f = 1;
         }
 }
