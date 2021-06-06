@@ -45,8 +45,9 @@ extern "C" void kmain() {
         syslog << "64k granules " << (memmod.stage1_tgran64() ? "" : "not ") << "supported.\n";
 
         syslog << "CPU frequency: " << (cpufrequency() / 1000000) << "MHz\n";
-        // TODO: actually check if the bootloader did stupid shit
-        syslog << "Kernel running at EL" << current_el() << ", that is very good.\n";
+
+        assert(current_el() == 2);
+        syslog << "Kernel running at EL2, that is very good.\n";
 
         GPU gpu;
         assert(gpu.valid());
