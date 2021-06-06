@@ -1,12 +1,14 @@
 mmu_enable:
         // sets the page table addresses
-        MSR TTBR0_EL1, X0
-        MSR TTBR1_EL1, X1
-        MSR TCR_EL1, X2
-        ISB
+        msr TTBR0_EL2, X0
+        msr TTBR1_EL2, X1
+        msr TCR_EL2, X2
+        isb
 
-        MRS X0, SCTLR_EL1
-        //setting the lsb in SCTLR_EL1 actually enables the MMU
-        ORR X0, X0, #1
-        MSR SCTLR_EL1, X0
-        ISB
+        mrs X3, SCTLR_EL2
+        // setting the lsb in SCTLR actually enables the MMU
+        orr X3, X3, #1
+        msr SCTLR_EL2, X3
+        isb
+
+        ret
