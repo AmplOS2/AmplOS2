@@ -53,6 +53,6 @@ format:
 	clang-format -Werror -i --style=file --verbose $(KSRCS) $(KHDRS)
 
 clean:
-	rm -f amplos.elf kernel8.img $(KOBJS) unifont.psf.h
+	rm -f amplos.elf kernel8.img $(KOBJS) fonts/unifont.psf.h
 
 .PHONY: all raspi loc test update clean format
