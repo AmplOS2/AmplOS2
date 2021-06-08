@@ -17,14 +17,14 @@
 #define PM_RSTC_FULLRST 0x00000020
 
 namespace {
-inline void cpu_relax() {
-        // this is copy-paste from linux
-        // (i have actually looked up what arm says, yield
-        //  is for, and using it seems fine to me)
-        asm volatile("yield" ::: "memory");
-}
-constexpr static inline void spincycles(uint64_t n) { spinwhile(n--); }
-static inline void           shutdown(bool restart) {
+// this is copy-paste from linux
+// (i have actually it looked up from arm and it seems fine to me)
+#define cpu_relax() asm volatile("yield" ::: "memory")
+
+inline void spincycles(uint64_t n) { spinwhile(n--); }
+
+#define abort shutdown
+void shutdown(bool restart = false) {
         if(!restart) {
                 for(uint32_t i = 0; i < 16; i++) {
                         size_t idx = mbox_start(8);
@@ -54,14 +54,12 @@ static inline void           shutdown(bool restart) {
         PM_WDOG = PM_WDOG_MAGIC | 10;
         PM_RSTC = PM_WDOG_MAGIC | PM_RSTC_FULLRST;
 }
-}
 
-namespace {
-static inline uint64_t clock() { return ((uint64_t)SYSTMR_HI << 32) | SYSTMR_LO; }
-static inline void     usleep(uint64_t n) {
+inline uint64_t clock() { return ((uint64_t)SYSTMR_HI << 32) | SYSTMR_LO; }
+
+inline void usleep(uint64_t n) {
         uint64_t t = clock() + n;
         if(t == n) return;
         spinwhile(clock() < t);
 }
-static inline void abort() { shutdown(false); }
 }

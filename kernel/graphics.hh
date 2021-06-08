@@ -29,9 +29,10 @@ public:
         }
 
         // NOTE: breaks if other is smaller than this
-        constexpr inline void copy_to(buffer &other) const {
+        void copy_to(buffer &other) const {
                 // omg i hate clang rn, i really want to make this the code below
                 // (it is better in every way) but then it is about 100 times slower
+                // even if we're using templates which should make it actually constexpr und schnell
                 for(uint32_t i = 0; i < w * h; i++) other.b[i] = b[i];
                 // for(uint32_t x = 0; x < w; x++)
                 //        for(uint32_t y = 0; y < h; y++) other.pixel(x, y) = pixel(x, y);
