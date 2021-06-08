@@ -2,6 +2,7 @@
 
 #include <assert.hh>
 #include <kalloc.hh>
+#include <math.hh>
 #include <mem.hh>
 #include <stdint.h>
 
