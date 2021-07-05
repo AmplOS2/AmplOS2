@@ -16,8 +16,9 @@ struct {
 void *k_page_alloc(size_t count) {
         for(size_t i = FIRST_PAGE; i < PAGE_COUNT - count; i++) {
                 if(i + count >= PAGE_COUNT) continue;
-                for(size_t j = i; j < i + count; j++)
-                        if(pages[j].allocated) continue;
+                bool b;
+                for(size_t j = i; j < i + count; j++) b |= pages[j].allocated;
+                if(b) continue;
                 for(size_t j = i; j < i + count; j++)
                         pages[j].allocated = pages[j].continued = true;
                 pages[i + count - 1].continued = false;
