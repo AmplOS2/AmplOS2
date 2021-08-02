@@ -1,5 +1,0 @@
-;; TODO: Adscript has to support C++ mangling
-(defn _Z9uart_putsPKc [char* s] int)
-
-(defn adscript_is_cool [] int
-  (_Z9uart_putsPKc "Adscript works inside of AmplOS!\n"))
