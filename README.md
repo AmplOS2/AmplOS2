@@ -34,11 +34,17 @@ compared to other Operating Systems was the excessive usage of `constexpr` and
 `inline` and those are simply not in Rust.
 
 ## Why not Adscript?
-Adscript is cool, but it isn't stable yet. Once it is, it will be used in a few
-places.
+Adscript is cool, but it isn't stable yet. Actually it will never be stable,
+because it won't be developed a lot further.
 
-It probably won't make it into the kernel for quite a while, because we need
-stable APIs for cross-compilation and all of the other hacks that we are using.
+## Why not Carp?
+Carp will probably be used in a few places. **Maybe** even the kernel. Its
+advantages in that code just aren't obvious enough to justify the hassle.
+
+But it will be used in a few programs, libraries, whatever.
+
+But we really have to convince the Carp team to reimplement the compiler in a
+more portable language than Haskell, preferably C or C++, maybe Rust.
 
 ## TODO / Roadmap
 AmplOS already does some great things, but there's still a lot to do:
