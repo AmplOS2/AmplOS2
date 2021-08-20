@@ -8,9 +8,23 @@ manager.
 
 ## Architecture
 `amport` has Ports. Ports are [ADN](https://github.com/Amplus2/adn) files that
-contain information about a them. Ports usually are pieces of software, but some
+contain information about them. Ports usually are pieces of software, but some
 Ports just exist for convenience, to install other Ports bundled into one. These
 Ports are also CI-built for a few OSes and architectures. If no prebuilt image
 of the Port is available, or the user requested to, the Port will be built from
 source on the user's machine. Otherwise a prebuilt image from the CI will be
-downloaded.
+downloaded. Furthermore, Ports are automatically CI-tested so that (hopefully)
+no update ever breakes your system.
+
+## Port definitions (a draft)
+```edn
+(port 'example :license mpl2
+  (info "An example package." "https://example.com")
+  (v1.0.0 "https://example.org/tarballs/example-1.0.0.tar.gz"
+    (hashes (sha256 "9cc57f2ca39c2d81aed7e3d82af0b5711863bd3403bb8f024c4c3b4ecf9652a4"))
+    (dependencies (hello v2.10))
+    ;; todo put a test here
+    (test)))
+```
+
+`2.10` is actually the newest version of GNU `hello`.
