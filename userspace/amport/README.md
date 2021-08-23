@@ -18,13 +18,13 @@ no update ever breakes your system.
 
 ## Port definitions (a draft)
 ```edn
-(port 'example :license mpl2
-  (info "An example package." "https://example.com")
-  (v1.0.0 "https://example.org/tarballs/example-1.0.0.tar.gz"
-    (hashes (sha256 "9cc57f2ca39c2d81aed7e3d82af0b5711863bd3403bb8f024c4c3b4ecf9652a4"))
-    (dependencies (hello v2.10))
-    ;; todo put a test here
-    (test)))
+(port 'dollarskip :license mit
+  (info "A simple c program to skip $ when copying shell commands" "https://example.com")
+  (v3.0 (ball "https://github.com/CleanMachine1/DollarSkip/archive/refs/tags/3.0.tar.gz")
+    (hashes (sha256 "8826bd814c543566130152e6e2da02b0d43363ca51f5e806e208760918a2531e"))
+    (dependencies)
+    (build-dependencies cc)
+    (install (make install))
+    (test (system "$ echo hi | grep hi")))
+  (HEAD (git "https://github.com/CleanMachine1/DollarSkip.git") :copy))
 ```
-
-`2.10` is actually the newest version of GNU `hello`.
