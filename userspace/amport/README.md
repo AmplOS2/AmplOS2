@@ -24,7 +24,7 @@ no update ever breakes your system.
     (hashes (sha256 "8826bd814c543566130152e6e2da02b0d43363ca51f5e806e208760918a2531e"))
     (dependencies)
     (build-dependencies cc)
-    (install (make install))
+    (install (make 'install))
     (test (system "$ echo hi | grep hi")))
   (HEAD (git "https://github.com/CleanMachine1/DollarSkip.git") :copy))
 ```
