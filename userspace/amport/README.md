@@ -19,11 +19,11 @@ no update ever breakes your system.
 ## Port definitions (a draft)
 ```edn
 (port 'dollarskip :license mit
-  (info "A simple c program to skip $ when copying shell commands" "https://example.com")
+  (info "A simple c program to skip $ when copying shell commands" "https://github.com/CleanMachine1/DollarSkip")
   (v3.0 (ball "https://github.com/CleanMachine1/DollarSkip/archive/refs/tags/3.0.tar.gz")
     (hashes (sha256 "8826bd814c543566130152e6e2da02b0d43363ca51f5e806e208760918a2531e"))
-    (dependencies)
-    (build-dependencies cc)
+    (dependencies libc)
+    (build-dependencies make cc)
     (install (make 'install))
     (test (system "$ echo hi | grep hi")))
   (HEAD (git "https://github.com/CleanMachine1/DollarSkip.git") :copy))
