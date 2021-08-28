@@ -17,11 +17,14 @@ downloaded. Furthermore, Ports are automatically CI-tested so that (hopefully)
 no update ever breakes your system.
 
 ## Port definitions (a draft)
+This doesn't work currently, see
+[CleanMachine1/DollarSkip#37](https://github.com/CleanMachine1/DollarSkip/pull/37)
+for more information.
 ```edn
 (port 'dollarskip :license mit
   (info "A simple c program to skip $ when copying shell commands" "https://github.com/CleanMachine1/DollarSkip")
-  (v3.0 (ball "https://github.com/CleanMachine1/DollarSkip/archive/refs/tags/3.0.tar.gz")
-    (hashes (sha256 "8826bd814c543566130152e6e2da02b0d43363ca51f5e806e208760918a2531e"))
+  (v3.1 (ball "https://github.com/CleanMachine1/DollarSkip/archive/refs/tags/3.1.tar.gz"
+    (hashes (sha256 "b873e967df7e163df7eec92a94b4655ab4bdb85802333be2a0f4412d838c1a9d"))
     (dependencies libc)
     (build-dependencies make cc)
     (install (make 'install))
