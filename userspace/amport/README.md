@@ -31,3 +31,15 @@ for more information.
     (test (system "$ echo hi | grep hi")))
   (HEAD (git "https://github.com/CleanMachine1/DollarSkip.git") :copy))
 ```
+
+## Package definitions (a draft, too)
+<!--I'm not yet sure if v3.1 should be quoted here but my intuition says "yes"-->
+```edn
+(package 'c3b45adc-33b7-4901-9b69-2d48814187d6
+  (dollarskip 'v3.1)
+  (target 'aarch64 'darwin 'mach-o)
+  (ball "https://ci.chrissx.de/amport/c3b45adc-33b7-4901-9b69-2d48814187d6.tar.gz")
+  (hashes (sha256 "71f54f414b8a5317c76cabd113b212da16424374c06072972a758c17bf392bc8"))
+  (dependencies (libc '3bf47da3-6cfb-4c8e-9f8f-94a8d8eff80f))
+  (build-dependencies (make '2321e0e1-c5d1-407b-a969-b0a4f62a09ff) (cc 'bda83aa1-bc46-44ac-b6f8-54b9e597a9fa)))
+```
