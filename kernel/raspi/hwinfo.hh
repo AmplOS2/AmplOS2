@@ -4,8 +4,12 @@
 namespace {
 
 // TODO: read a lot of docs and figure out wheather the isb is actually needed
-// TODO: figure out if there's any way we can make using this a one-liner
-#define mrs_to_var(reg, var) asm volatile("isb; mrs %0, " reg : "=r"(var))
+#define read_mrs(reg)                                           \
+        (([]() {                                                \
+                volatile uint64_t _mrs;                         \
+                asm volatile("isb; mrs %0, " reg : "=r"(_mrs)); \
+                return _mrs;                                    \
+        })())
 
 class MemoryModel {
 private:
@@ -13,8 +17,8 @@ private:
 
 public:
         inline MemoryModel() {
-                mrs_to_var("ID_AA64MMFR0_EL1", mmfr0);
-                mrs_to_var("ID_AA64MMFR1_EL1", mmfr1);
+                mmfr0 = read_mrs("ID_AA64MMFR0_EL1");
+                mmfr1 = read_mrs("ID_AA64MMFR1_EL1");
         }
 
         // https://developer.arm.com/documentation/ddi0595/2020-12/AArch64-Registers/ID-AA64MMFR0-EL1--AArch64-Memory-Model-Feature-Register-0
@@ -72,22 +76,9 @@ public:
 
         // TODO: other registers
 };
-
-inline uint64_t rdtsc() {
-        uint64_t i;
-        mrs_to_var("CNTPCT_EL0", i); // CNTPCT is the physical counter, CNTVCT the virtual one
-        return i;
-}
-
-inline uint32_t cpufrequency() {
-        uint64_t i;
-        mrs_to_var("CNTFRQ_EL0", i);
-        return i & 0xffffffff;
-}
-
-inline uint_fast8_t current_el() {
-        uint64_t i;
-        mrs_to_var("CurrentEL", i);
-        return (i & 0b1100) >> 2;
-}
+// reads CNTPCT, the physical counter; CNTVCT is the virtual one
+inline uint64_t rdtsc() { return read_mrs("CNTPCT_EL0"); }
+inline uint32_t cpufrequency() { return read_mrs("CNTFRQ_EL0") & 0xffffffff; }
+inline uint_fast8_t current_el() { return (read_mrs("CurrentEL") & 0b1100) >> 2; }
+#undef read_mrs
 }
