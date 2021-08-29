@@ -34,12 +34,13 @@ compared to other Operating Systems was the excessive usage of `constexpr` and
 `inline` and those are simply not in Rust.
 
 ## Why not Adscript?
-Adscript is cool, but it isn't stable yet. Actually it will never be stable,
-because it won't be developed a lot further.
+Adscript is cool, but it isn't stable yet. Actually it may never be stable,
+because its development has nearly halted.
 
 ## Why not Carp?
 Carp will probably be used in a few places. **Maybe** even the kernel. Its
-advantages in that code just aren't obvious enough to justify the hassle.
+advantages in that code just aren't obvious enough to justify the hassle at the
+moment.
 
 But it will be used in a few programs, libraries, whatever.
 
@@ -68,7 +69,8 @@ maybe `busybox`, maybe GNU `coreutils`)
 * Port `zsh` and `vim`
 * A temporary unstable API for full-screen graphics from Userspace
 * Port `genericdoom`
-* Display Server, Window Manager, SDL port
+* Display Server, Window Manager, ...
+* Port SDL
 * Port modern programming languages (Dart (+ Flutter), Go, Rust, ...) and
 apps (`that_terminal`, Emacs, some browser (maybe surf), 90s games, ...)
 * Networking
