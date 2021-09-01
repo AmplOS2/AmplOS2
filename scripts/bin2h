@@ -2,11 +2,11 @@
 from json import dumps
 from sys import argv
 
-f = argv[1]
-n = f.replace('.', '_').replace('-', '_')
+n = argv[1].replace('.', '_').replace('-', '_')
+with open(argv[1], 'rb') as f:
+    b = list(f.read())
 
-b = list(open(f, 'rb').read())
-
-open('%s.h' % f, 'w').write('const static unsigned char %s[]=' % n + dumps(b)
-                            .replace('[', '{').replace(']', '}').replace(' ', '') + ';' +
-                            'const static unsigned %s_length=%d;\n' % (n, len(b)))
+with open(argv[1] + '.h', 'w') as f:
+    f.write(f'const static unsigned char {n}[]={dumps(b)}'
+        .replace('[', '{').replace(']', '}').replace(' ', '') +
+        f';const static unsigned {n}_length={len(b)};\n')
