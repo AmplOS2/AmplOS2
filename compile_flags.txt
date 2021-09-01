@@ -1,0 +1,12 @@
+--target=aarch64-none-elf
+-Wall
+-Wextra
+-pedantic
+-std=c++2a
+-Wno-unused-function
+-fno-exceptions
+-ffreestanding
+-Ikernel
+-Iutf8
+-I.
+-Ipsf
