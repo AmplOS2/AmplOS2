@@ -21,7 +21,7 @@ raspi: kernel8.img
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
 fonts/%.psf.h: fonts/%.psf
-	cd fonts && ../scripts/bin2h $*.psf
+	scripts/bin2h $<
 
 amplos.elf: fonts/unifont.psf.h $(KOBJS)
 	$(LD) $(LDFLAGS) -T boot/raspi.ld -o amplos.elf $(KOBJS)

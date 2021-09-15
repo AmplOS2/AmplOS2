@@ -1,12 +1,13 @@
 #!/usr/bin/env python3
 from json import dumps
+from os.path import basename
 from sys import argv
 
-n = argv[1].replace('.', '_').replace('-', '_')
+n = basename(argv[1]).replace('.', '_').replace('-', '_')
 with open(argv[1], 'rb') as f:
     b = list(f.read())
 
 with open(argv[1] + '.h', 'w') as f:
-    f.write(f'const static unsigned char {n}[]={dumps(b)}'
-        .replace('[', '{').replace(']', '}').replace(' ', '') +
+    f.write(f'const static unsigned char {n}[]=' +
+        dumps(b).replace('[', '{').replace(']', '}').replace(' ', '') +
         f';const static unsigned {n}_length={len(b)};\n')
