@@ -1,6 +1,8 @@
 #pragma once
 #include <stdint.h>
 
+#define PI 3.141592653589793
+
 // TODO: make portable
 double trunc(double x) {
         double y;

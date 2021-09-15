@@ -74,7 +74,7 @@ extern "C" void kmain() {
                 });
                 for(uint32_t x = 0; x < gpu.width(); x++) {
                         uint32_t y =
-                                sin(fmod(((double)x) / 100, 6.3)) * 200 - 100 + gpu.width() / 2;
+                                sin(fmod(((double)x) / 100, 2*PI)) * 200 - 100 + gpu.width() / 2;
                         for(uint32_t i = y - 5; i <= y + 5; i++) gpu.pixel(x, i) = 0xffffffff;
                 }
                 gpu.draw_text_unifont("AmplOS2 is the best operating system ever created by "
