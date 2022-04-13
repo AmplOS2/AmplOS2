@@ -3,7 +3,7 @@
 
 namespace {
 
-// TODO: read a lot of docs and figure out wheather the isb is actually needed
+// TODO: read a lot of docs and figure out whether the isb is actually needed
 #define read_mrs(reg)                                           \
         (([]() {                                                \
                 volatile uint64_t _mrs;                         \
@@ -77,8 +77,9 @@ public:
         // TODO: other registers
 };
 // reads CNTPCT, the physical counter; CNTVCT is the virtual one
-inline uint64_t rdtsc() { return read_mrs("CNTPCT_EL0"); }
-inline uint32_t cpufrequency() { return read_mrs("CNTFRQ_EL0") & 0xffffffff; }
-inline uint_fast8_t current_el() { return (read_mrs("CurrentEL") & 0b1100) >> 2; }
+inline uint64_t      rdtsc() { return read_mrs("CNTPCT_EL0"); }
+inline uint_fast32_t cpufrequency() { return read_mrs("CNTFRQ_EL0") & 0xffffffff; }
+inline uint_fast8_t  current_el() { return (read_mrs("CurrentEL") & 0b1100) >> 2; }
+inline uint_fast16_t cptr_el2() { return (read_mrs("CPTR_EL2") & 0xffffffff) >> 16; }
 #undef read_mrs
 }

@@ -47,6 +47,28 @@ extern "C" void kmain() {
         assert(current_el() == 2);
         syslog << "Kernel running at EL2, that is very good.\n";
 
+        //  TODO: do we have to write to that?
+        syslog << "CPTR_EL2: " << syslog_hex << cptr_el2() << "\n";
+
+        // TODO: exception vectors (VBAR_ELx)
+
+        constexpr uint64_t TT_S1_NORMAL_WBWA   = 0x00000000000000405; // Index = 1, AF=1
+        constexpr uint64_t TT_S1_DEVICE_nGnRnE = 0x00600000000000409; // Index = 2, AF=1, PXN=1,
+
+        uint64_t *tt = (uint64_t *)kalloc(4096);
+        memset(tt, 0, 4096);
+        tt[0] = TT_S1_NORMAL_WBWA | 0;
+        tt[1] = TT_S1_DEVICE_nGnRnE | MMIO_BASE;
+
+        // T0SZ=0b011001 Limits VA space to 39 bits, translation starts @ l1
+        // IGRN0=0b01    Walks to TTBR0 are Inner WB/WA
+        // OGRN0=0b01    Walks to TTBR0 are Outer WB/WA
+        // SH0=0b11      Inner Shareable
+        // TBI0=0b0      Top byte not ignored
+        // TG0=0b00      4KB granule
+        // IPS=0         32-bit PA space
+        MMU::mmu_enable(tt, 0x19 | (1 << 8) | (1 << 10) | (3 << 12), 0x000000000000FF44);
+
         GPU gpu;
         assert(gpu.valid());
 
@@ -74,7 +96,7 @@ extern "C" void kmain() {
                 });
                 for(uint32_t x = 0; x < gpu.width(); x++) {
                         uint32_t y =
-                                sin(fmod(((double)x) / 100, 2*PI)) * 200 - 100 + gpu.width() / 2;
+                                sin(fmod(((double)x) / 100, 2 * PI)) * 200 - 100 + gpu.width() / 2;
                         for(uint32_t i = y - 5; i <= y + 5; i++) gpu.pixel(x, i) = 0xffffffff;
                 }
                 gpu.draw_text_unifont("AmplOS2 is the best operating system ever created by "

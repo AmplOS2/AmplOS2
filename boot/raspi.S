@@ -11,20 +11,21 @@
 // but this seems to work in qemu.
 
 .section ".text.boot"
+.align 3
 
 .global _start
 
 _start:
-        // read cpu id, stop slave cores
+        // read cpu id, stop secondary cores
         mrs x1, mpidr_el1
         and x1, x1, #3
         cbz x1, 2f
-        // cpu id > 0, stop
-1:      wfe
+        // cpu id > 0 ⇒ stop
+1:      wfi
         b 1b
-2:      // cpu id == 0
+2:      // cpu id = 0
 
-        // set stack before our code
+        // the stack grows from the entry point downwards
         ldr x1, =_start
         mov sp, x1
 

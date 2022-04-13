@@ -4,6 +4,7 @@
 #include <kalloc.hh>
 #include <math.hh>
 #include <mem.hh>
+#include <memset.hh>
 #include <stdint.h>
 
 #ifdef ANOS_ARM64_RASPI

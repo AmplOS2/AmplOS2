@@ -47,6 +47,7 @@ update: format
 
 format:
 	clang-format -Werror -i --style=file --verbose $(KSRCS) $(KHDRS)
+	deno fmt
 
 clean:
 	rm -f amplos.elf kernel8.img $(KOBJS) fonts/unifont.psf.h

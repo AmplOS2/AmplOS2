@@ -54,7 +54,7 @@ public:
                               uint32_t    color,
                               uint32_t    x,
                               uint32_t    y,
-                              psf::font & font) {
+                              psf::font  &font) {
                 x -= font.width;
                 auto ox = x;
                 while(*str) {

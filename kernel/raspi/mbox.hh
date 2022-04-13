@@ -58,7 +58,7 @@ constexpr inline size_t mbox_start(size_t len) {
         return idx;
 }
 
-constexpr inline void mbox_cmd(size_t &       idx,
+constexpr inline void mbox_cmd(size_t        &idx,
                                const uint32_t cmd,
                                const uint32_t len,
                                const uint32_t arg1,

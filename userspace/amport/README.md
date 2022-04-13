@@ -1,4 +1,5 @@
 # Ampl(us)|(OS)2 Port System
+
 For AmplOS2 to become a seriously viable operating system, it, of course, has to
 have some kind of way to get Third Party software. `amport` will solve this
 problem by being a (reasonably) cross-platform, (reasonably)
@@ -7,6 +8,7 @@ ideas similar to those put forward by the distri Linux distribution/package
 manager.
 
 ## Architecture
+
 `amport` has Ports. Ports are [ADN](https://github.com/Amplus2/adn) files that
 contain information about them. Ports usually are pieces of software, but some
 Ports just exist for convenience, to install other Ports bundled into one. These
@@ -17,9 +19,11 @@ downloaded. Furthermore, Ports are automatically CI-tested so that (hopefully)
 no update ever breakes your system.
 
 ## Port definitions (a draft)
+
 This doesn't work currently, see
 [CleanMachine1/DollarSkip#37](https://github.com/CleanMachine1/DollarSkip/pull/37)
 for more information.
+
 ```edn
 (port 'dollarskip :license mit
   (info "A simple c program to skip $ when copying shell commands" "https://github.com/CleanMachine1/DollarSkip")
@@ -33,7 +37,9 @@ for more information.
 ```
 
 ## Package definitions (a draft, too)
+
 <!--I'm not yet sure if v3.1 should be quoted here but my intuition says "yes"-->
+
 ```edn
 (package 'c3b45adc-33b7-4901-9b69-2d48814187d6
   (dollarskip 'v3.1)
