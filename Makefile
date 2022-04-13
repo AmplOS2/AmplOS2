@@ -1,3 +1,4 @@
+# TARGET  ?= aarch64-none-elf
 CXX      = clang++ --target=aarch64-none-elf
 LD       = ld.lld
 OBJCOPY  = llvm-objcopy
@@ -8,7 +9,10 @@ LDFLAGS   = --static -x -s
 
 KHDRS = $(wildcard kernel/*.hh) $(wildcard kernel/*.h) $(wildcard kernel/*/*.hh)
 KSRCS = $(wildcard kernel/*.cc) $(wildcard kernel/*/*.cc)
-KOBJS = $(KSRCS:.cc=.o) boot/raspi.o
+KASMS = $(wildcard kernel/*.S) $(wildcard kernel/*/*.S) $(wildcard boot/*.S)
+KOBJS = $(KSRCS:.cc=.o) $(KASMS:.S=.o)
+
+UNIFONT ?= http://unifoundry.com/pub/unifont/unifont-14.0.02/font-builds/Unifont-APL8x16-14.0.02.psf.gz
 
 all: raspi
 
@@ -31,12 +35,12 @@ kernel8.img: amplos.elf
 
 fonts/unifont.psf:
 	@mkdir -p fonts
-	curl -Lo fonts/unifont.psf.gz http://unifoundry.com/pub/unifont/unifont-13.0.06/font-builds/Unifont-APL8x16-13.0.06.psf.gz
+	curl -Lo fonts/unifont.psf.gz $(UNIFONT)
 	gunzip fonts/unifont.psf.gz
 
 # Append -s and -S to be able to use gdb
 test: raspi
-	qemu-system-aarch64 -M raspi3 -serial stdio -kernel kernel8.img
+	qemu-system-aarch64 -M raspi3b -serial stdio -kernel kernel8.img
 
 update: format
 	git submodule foreach git pull
