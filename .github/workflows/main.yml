@@ -16,6 +16,7 @@ jobs:
       - uses: addnab/docker-run-action@v3
         with:
           image: amplos-build
+          options: -v ${{ github.workspace }}:/amplos
           run: make -j$(nproc) raspi
       - uses: actions/upload-artifact@v2
         with:
