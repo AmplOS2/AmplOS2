@@ -12,7 +12,8 @@ KSRCS = $(wildcard kernel/*.cc) $(wildcard kernel/*/*.cc)
 KASMS = $(wildcard kernel/*.S) $(wildcard kernel/*/*.S) $(wildcard boot/*.S)
 KOBJS = $(KSRCS:.cc=.o) $(KASMS:.S=.o)
 
-UNIFONT ?= http://unifoundry.com/pub/unifont/unifont-14.0.02/font-builds/Unifont-APL8x16-14.0.02.psf.gz
+UNIFONT_PSF ?= http://unifoundry.com/pub/unifont/unifont-14.0.03/font-builds/Unifont-APL8x16-14.0.03.psf.gz
+UNIFONT_OTF ?= https://fonts.chrissx.de/fonts/unifont-14.0.03.otf
 
 all: raspi
 
@@ -21,13 +22,13 @@ raspi: kernel8.img
 %.o: %.cc fonts/unifont.psf.h $(KHDRS)
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
-%.o: %.S
+%.o: %.S sourcelist/dist/index.html
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
 fonts/%.psf.h: fonts/%.psf
 	scripts/bin2h $<
 
-amplos.elf: fonts/unifont.psf.h $(KOBJS)
+amplos.elf: boot/raspi.ld fonts/unifont.psf.h $(KOBJS)
 	$(LD) $(LDFLAGS) -T boot/raspi.ld -o amplos.elf $(KOBJS)
 
 kernel8.img: amplos.elf
@@ -35,8 +36,21 @@ kernel8.img: amplos.elf
 
 fonts/unifont.psf:
 	@mkdir -p fonts
-	curl -Lo fonts/unifont.psf.gz $(UNIFONT)
+	curl -Lo fonts/unifont.psf.gz $(UNIFONT_PSF)
 	gunzip fonts/unifont.psf.gz
+
+fonts/unifont.otf:
+	@mkdir -p fonts
+	curl -Lo fonts/unifont.otf $(UNIFONT_OTF)
+
+sourcelist/dist/index.html: sourcelist/package-lock.json sourcelist/src/sources.html $(KLSTS) $(wildcard sourcelist/src/*) fonts/unifont.otf
+	cd sourcelist && npx parcel build src/index.html
+
+sourcelist/package-lock.json: sourcelist/package.json
+	cd sourcelist && npm install
+
+sourcelist/src/sources.html: $(KSRCS) $(KHDRS) $(KASMS)
+	for x in $^ ; do scripts/code2html $$x ; done > $@
 
 # Append -s and -S to be able to use gdb
 test: raspi
@@ -50,6 +64,6 @@ format:
 	deno fmt
 
 clean:
-	rm -f amplos.elf kernel8.img $(KOBJS) fonts/unifont.psf.h
+	rm -rf amplos.elf kernel8.img $(KOBJS) fonts/ sourcelist/package-lock.json sourcelist/node_modules/ sourcelist/dist/ sourcelist/src/sources.html
 
 .PHONY: all raspi loc test update clean format

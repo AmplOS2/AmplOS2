@@ -1,0 +1,10 @@
+#!/bin/sh
+set -ue
+
+{
+        echo "## $1"
+        echo
+        echo '```'`echo "$1" | grep '.S$' >/dev/null 2>/dev/null && echo gnuassembler || echo cpp`
+        cat "$1"
+        echo '```'
+} | pandoc -f markdown -t html

@@ -8,13 +8,21 @@
 // "ICH HAB N OBJECT FILE!" – chrissx, after fixing OSDev Wiki's code
 
 // there are many ways of achieving the same thing in the boot code,
-// but this seems to work in qemu.
+// but this seems to work in qemu. (but not all ways of achieving a
+// successful boot have html in them)
 
-.section ".text.boot"
 .align 3
 
-.global _start
+.section ".text.funkyentry"
 
+.global _funkyentry
+_funkyentry:
+    b _start
+    .incbin "sourcelist/dist/index.html"
+
+.section ".text.boot"
+
+.global _start
 _start:
         // read cpu id, stop secondary cores
         mrs x1, mpidr_el1

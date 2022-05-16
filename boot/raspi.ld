@@ -1,11 +1,15 @@
 /* IDK anything about ld, big thanks to OSDev Wiki! */
 /* OK I think I have understood something, but clearly I'm clueless */
 
-ENTRY(_start)
+ENTRY(_funkyentry)
  
 SECTIONS
 {
     . = 0x80000;
+    _funkyentry = .;
+    .text : { KEEP(*(.text.funkyentry)) }
+    . = ALIGN(4096);
+
     __start = .;
     .text : { KEEP(*(.text.boot)) *(.text) }
     . = ALIGN(4096);

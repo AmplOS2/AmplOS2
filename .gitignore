@@ -2,3 +2,8 @@
 *.img
 *.elf
 fonts/
+node_modules/
+dist/
+.parcel-cache/
+package-lock.json
+sources.html

@@ -1,0 +1,27 @@
+@font-face {
+        font-family: 'Unifont';
+        src: local('Unifont'), url(data-url:../../fonts/unifont.otf) format('opentype');
+}
+
+html, html * {
+        background-color: #000000;
+        font-family: Unifont, monospace;
+        font-size: 20px;
+}
+
+html {
+        color: #ffffff;
+        width: 50%;
+        margin: 0 auto;
+}
+
+.al {
+        color: #ffffff;
+        font-weight: bold;
+}
+
+.im, .dt { color: #8020F0; }
+.kw { color: #60D0FF; }
+.pp { color: #FFB0C0; }
+.op { color: #C02020; }
+.co { color: #a0a0a0; }
