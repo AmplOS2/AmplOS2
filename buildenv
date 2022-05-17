@@ -1,3 +1,4 @@
 #!/bin/sh
+set -e
 docker images | grep amplos-build >/dev/null || docker build . -t amplos-build
 docker run --rm -it -v $PWD:/amplos amplos-build "$@"

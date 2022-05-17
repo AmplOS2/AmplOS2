@@ -3,7 +3,7 @@ CXX      = clang++ --target=aarch64-none-elf
 LD       = ld.lld
 OBJCOPY  = llvm-objcopy
 
-CXXFLAGS  = -Wall -Wextra -pedantic -std=c++2a -O3
+CXXFLAGS  = -Wall -Wextra -pedantic -std=c++2a -O3 -mcpu=cortex-a53
 CXXFLAGS += -Wno-unused-function -fno-exceptions -ffreestanding -Ikernel -Iutf8 -I. -Ipsf
 LDFLAGS   = --static -x -s
 
