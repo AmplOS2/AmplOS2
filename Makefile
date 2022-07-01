@@ -49,8 +49,8 @@ sourcelist/dist/index.html: sourcelist/package-lock.json sourcelist/src/sources.
 sourcelist/package-lock.json: sourcelist/package.json
 	cd sourcelist && npm install
 
-sourcelist/src/sources.html: $(KSRCS) $(KHDRS) $(KASMS)
-	for x in $^ ; do scripts/code2html $$x ; done > $@
+sourcelist/src/sources.html: LICENSE $(KSRCS) $(KHDRS) $(KASMS)
+	for x in $^ ; do scripts/code2md $$x ; done | pandoc -f markdown -t html > $@
 
 # Append -s and -S to be able to use gdb
 test: raspi

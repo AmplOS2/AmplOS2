@@ -1,0 +1,15 @@
+#!/bin/bash
+set -e
+
+declare -A langs
+langs[c]=c
+langs[h]=c
+langs[cc]=cpp
+langs[hh]=cpp
+langs[S]=gnuassembler
+
+echo "## $1"
+echo
+echo '```'${langs[`echo $1 | cut -d. -f2`]}
+cat "$1"
+echo '```'
