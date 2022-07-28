@@ -3,12 +3,11 @@
 
 namespace {
 
-// TODO: read a lot of docs and figure out whether the isb is actually needed
-#define read_mrs(reg)                                           \
-        (([]() {                                                \
-                volatile uint64_t _mrs;                         \
-                asm volatile("isb; mrs %0, " reg : "=r"(_mrs)); \
-                return _mrs;                                    \
+#define read_mrs(reg)                                      \
+        (([]() {                                           \
+                volatile uint64_t _mrs;                    \
+                asm volatile("mrs %0, " reg : "=r"(_mrs)); \
+                return _mrs;                               \
         })())
 
 class MemoryModel {
