@@ -47,7 +47,7 @@ extern "C" void kmain() {
         assert(current_el() == 2);
         syslog << "Kernel running at EL2, that is very good.\n";
 
-        //  TODO: do we have to write to that?
+        // TODO: do we have to write to that?
         syslog << "CPTR_EL2: " << syslog_hex << cptr_el2() << "\n";
 
         // TODO: exception vectors (VBAR_ELx)

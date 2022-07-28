@@ -51,6 +51,13 @@ that code just aren't obvious enough to justify the hassle at the moment.
 But we really have to convince the Carp team to reimplement the compiler in a
 more portable language than Haskell, preferably C or C++, maybe Rust.
 
+## Why not Carbon?
+
+Not stable, not in Ubuntu, …
+
+Seriously tho: Carbon might be a consideration at some point, but at that point
+we might as well have rewritten parts in Rust and dealt with problems there.
+
 ## TODO / Roadmap
 
 AmplOS already does some great things, but there's still a lot to do:

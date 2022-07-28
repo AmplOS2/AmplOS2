@@ -11,6 +11,7 @@ KHDRS = $(wildcard kernel/*.hh) $(wildcard kernel/*.h) $(wildcard kernel/*/*.hh)
 KSRCS = $(wildcard kernel/*.cc) $(wildcard kernel/*/*.cc)
 KASMS = $(wildcard kernel/*.S) $(wildcard kernel/*/*.S) $(wildcard boot/*.S)
 KOBJS = $(KSRCS:.cc=.o) $(KASMS:.S=.o)
+SCRIPTS = $(wildcard scripts/*)
 
 UNIFONT_PSF ?= http://unifoundry.com/pub/unifont/unifont-14.0.03/font-builds/Unifont-APL8x16-14.0.03.psf.gz
 UNIFONT_OTF ?= https://fonts.chrissx.de/fonts/unifont-14.0.03.otf
@@ -55,7 +56,7 @@ sourcelist/dist/index.html: sourcelist/package-lock.json sourcelist/src/sources.
 sourcelist/package-lock.json: sourcelist/package.json
 	cd sourcelist && npm install
 
-sourcelist/src/sources.html: LICENSE $(KSRCS) $(KHDRS) $(KASMS)
+sourcelist/src/sources.html: LICENSE $(KSRCS) $(KHDRS) $(KASMS) $(SCRIPTS)
 	for x in $^ ; do scripts/code2md $$x ; done | pandoc -f markdown -t html > $@
 
 # Append -s and -S to be able to use gdb
