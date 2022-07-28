@@ -15,7 +15,13 @@ KOBJS = $(KSRCS:.cc=.o) $(KASMS:.S=.o)
 UNIFONT_PSF ?= http://unifoundry.com/pub/unifont/unifont-14.0.03/font-builds/Unifont-APL8x16-14.0.03.psf.gz
 UNIFONT_OTF ?= https://fonts.chrissx.de/fonts/unifont-14.0.03.otf
 
-all: raspi
+all: raspi logo.ico
+
+%.png: %.svg
+	inkscape $< -o $@
+
+%.ico: %.png
+	convert $< -resize 128x128 $@
 
 raspi: kernel8.img
 
@@ -43,7 +49,7 @@ fonts/unifont.otf:
 	@mkdir -p fonts
 	curl -Lo fonts/unifont.otf $(UNIFONT_OTF)
 
-sourcelist/dist/index.html: sourcelist/package-lock.json sourcelist/src/sources.html $(KLSTS) $(wildcard sourcelist/src/*) fonts/unifont.otf
+sourcelist/dist/index.html: sourcelist/package-lock.json sourcelist/src/sources.html $(KLSTS) $(wildcard sourcelist/src/*) fonts/unifont.otf logo.svg
 	cd sourcelist && npx parcel build src/index.html
 
 sourcelist/package-lock.json: sourcelist/package.json

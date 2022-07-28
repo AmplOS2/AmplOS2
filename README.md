@@ -1,4 +1,4 @@
-# AmplOS
+# Ampl<img width=24pt src=logo.png />
 
 Amplus 2.0 Operating System, originally ANother Operating System, is currently
 only designed to run on RasPi 3 and 4. PC/… support is “planned” (writing the
