@@ -59,7 +59,6 @@ inline uint64_t clock() { return ((uint64_t)SYSTMR_HI << 32) | SYSTMR_LO; }
 
 inline void usleep(uint64_t n) {
         uint64_t t = clock() + n;
-        if(t == n) return;
         spinwhile(clock() < t);
 }
 }

@@ -1,15 +1,15 @@
 #!/bin/bash
 set -e
 
-declare -A langs
-langs[c]=c
-langs[h]=c
-langs[cc]=cpp
-langs[hh]=cpp
-langs[S]=gnuassembler
+langs=`mktemp -d`
+echo '```c'            > "$langs/c"
+echo '```c'            > "$langs/h"
+echo '```cpp'          > "$langs/cc"
+echo '```cpp'          > "$langs/hh"
+echo '```gnuassembler' > "$langs/S"
 
 echo "## $1"
 echo
-echo '```'${langs[`echo $1 | cut -d. -f2`]}
+cat $langs/`echo $1 | cut -d. -f2` 2>/dev/null || echo '```'
 cat "$1"
 echo '```'

@@ -75,10 +75,12 @@ public:
 
         // TODO: other registers
 };
-// reads CNTPCT, the physical counter; CNTVCT is the virtual one
+/// reads CNTPCT, the physical counter; CNTVCT is the virtual one
 inline uint64_t      rdtsc() { return read_mrs("CNTPCT_EL0"); }
 inline uint_fast32_t cpufrequency() { return read_mrs("CNTFRQ_EL0") & 0xffffffff; }
 inline uint_fast8_t  current_el() { return (read_mrs("CurrentEL") & 0b1100) >> 2; }
+/// https://developer.arm.com/documentation/ddi0595/2020-12/AArch64-Registers/CPTR-EL2--Architectural-Feature-Trap-Register--EL2-
+/// D13.2.31, p.5321
 inline uint_fast16_t cptr_el2() { return (read_mrs("CPTR_EL2") & 0xffffffff) >> 16; }
 #undef read_mrs
 }
