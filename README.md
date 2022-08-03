@@ -27,6 +27,7 @@ have to install the following dependencies:
 - [`python3`](https://www.python.org)
 - [`llvm`](https://llvm.org) with [`clang`](https://clang.llvm.org) and
   [`lld`](https://lld.llvm.org)
+- [`npm`](https://nodejs.org)
 - [`qemu`](https://www.qemu.org) (for testing)
 
 ## Why not Rust?

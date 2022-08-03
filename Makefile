@@ -50,8 +50,16 @@ fonts/unifont.otf:
 	@mkdir -p fonts
 	curl -Lo fonts/unifont.otf $(UNIFONT_OTF)
 
-sourcelist/dist/index.html: sourcelist/package-lock.json sourcelist/src/sources.html $(KLSTS) $(wildcard sourcelist/src/*) fonts/unifont.otf logo.svg
-	cd sourcelist && npx parcel build src/index.html
+sourcelist/src/logo.ico.zst: logo.ico
+	zstd -18 $< -fo $@
+
+sourcelist/src/%.zst: sourcelist/dist/%
+	zstd -18 $< -fo $@
+
+sourcelist/dist/index.html: sourcelist/package-lock.json sourcelist/src/index.html sourcelist/src/index.js sourcelist/src/style.css.zst sourcelist/src/logo.ico.zst sourcelist/src/sources.html.zst
+
+sourcelist/dist/%: sourcelist/package-lock.json sourcelist/src/% fonts/unifont.otf logo.ico
+	cd sourcelist && npx parcel build src/$*
 
 sourcelist/package-lock.json: sourcelist/package.json
 	cd sourcelist && npm install

@@ -1,6 +1,17 @@
-import sources from "bundle-text:./sources.html";
-import style from "bundle-text:./style.css";
-import logo from "data-url:../../logo.ico";
+import * as fzstd from "fzstd";
+import fs from "fs";
+
+const style = new TextDecoder("utf-8").decode(
+  fzstd.decompress(fs.readFileSync(__dirname + "/style.css.zst")),
+);
+const sources = new TextDecoder("utf-8").decode(
+  fzstd.decompress(fs.readFileSync(__dirname + "/sources.html.zst")),
+);
+const a = fzstd.decompress(fs.readFileSync(__dirname + "/logo.ico.zst"));
+const logo = "data:image/x-icon;base64," +
+  btoa(
+    Array(a.length).fill("").map((_, i) => String.fromCharCode(a[i])).join(""),
+  );
 
 const app = document.createElement("div");
 app.id = "app";

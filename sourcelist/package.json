@@ -1,8 +1,9 @@
 {
   "browserlist": ">.05%",
   "devDependencies": {
-    "@parcel/optimizer-data-url": "^2.5.0",
-    "@parcel/transformer-inline-string": "^2.5.0",
-    "parcel": "^2.5.0"
+    "@parcel/optimizer-data-url": "^2.6.0",
+    "@parcel/transformer-inline-string": "^2.6.2",
+    "buffer": "^6.0.3",
+    "fzstd": "^0.0.4"
   }
 }
