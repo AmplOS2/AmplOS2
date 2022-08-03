@@ -28,6 +28,9 @@ have to install the following dependencies:
 - [`llvm`](https://llvm.org) with [`clang`](https://clang.llvm.org) and
   [`lld`](https://lld.llvm.org)
 - [`npm`](https://nodejs.org)
+- [`pandoc`](https://pandoc.org)
+- [`inkscape`](https://inkscape.org)
+- [`imagemagick`](https://imagemagick.org)
 - [`qemu`](https://www.qemu.org) (for testing)
 
 ## Why not Rust?

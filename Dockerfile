@@ -1,7 +1,7 @@
 FROM chrissx/llvm:latest
 
 ENV DEBIAN_FRONTEND=noninteractive
-RUN apt update && apt upgrade -y && apt install -y python3 curl wget npm pandoc
+RUN apt update && apt upgrade -y && apt install -y python3 curl wget npm pandoc inkscape imagemagick
 
 VOLUME /amplos
 WORKDIR /amplos
