@@ -31,6 +31,7 @@ have to install the following dependencies:
 - [`pandoc`](https://pandoc.org)
 - [`inkscape`](https://inkscape.org)
 - [`imagemagick`](https://imagemagick.org)
+- [`zstd`](https://facebook.github.io/zstd/)
 - [`qemu`](https://www.qemu.org) (for testing)
 
 ## Why not Rust?
