@@ -13,7 +13,7 @@ KASMS = $(wildcard kernel/*.S) $(wildcard kernel/*/*.S) $(wildcard boot/*.S)
 KOBJS = $(KSRCS:.cc=.o) $(KASMS:.S=.o)
 SCRIPTS = $(wildcard scripts/*)
 
-UNIFONT_PSF ?= http://unifoundry.com/pub/unifont/unifont-14.0.03/font-builds/Unifont-APL8x16-14.0.03.psf.gz
+#UNIFONT_PSF ?= http://unifoundry.com/pub/unifont/unifont-14.0.03/font-builds/Unifont-APL8x16-14.0.03.psf.gz
 UNIFONT_OTF ?= https://fonts.chrissx.de/fonts/unifont-14.0.03.otf
 
 all: raspi logo.ico
@@ -41,10 +41,10 @@ amplos.elf: boot/raspi.ld fonts/unifont.psf.h $(KOBJS)
 kernel8.img: amplos.elf
 	$(OBJCOPY) amplos.elf -S -O binary kernel8.img
 
-fonts/unifont.psf:
-	@mkdir -p fonts
-	curl -Lo fonts/unifont.psf.gz $(UNIFONT_PSF)
-	gunzip fonts/unifont.psf.gz
+#fonts/unifont.psf:
+#	@mkdir -p fonts
+#	curl -Lo fonts/unifont.psf.gz $(UNIFONT_PSF)
+#	gunzip fonts/unifont.psf.gz
 
 fonts/unifont.otf:
 	@mkdir -p fonts

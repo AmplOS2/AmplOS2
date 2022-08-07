@@ -63,6 +63,21 @@ Not stable, not in Ubuntu, …
 Seriously tho: Carbon might be a consideration at some point, but at that point
 we might as well have rewritten parts in Rust and dealt with problems there.
 
+## Licensing
+
+AmplOS itself is [LGPLv2.1](LICENSE) licensed, but it currently uses code\* with
+a variety of licenses:
+
+- [libpsf](https://github.com/AmplOS2/libpsf)
+  ([LGPLv2.1](https://github.com/AmplOS2/libpsf/blob/master/LICENSE))
+- [branchless-utf8](https://github.com/AmplOS2/branchless-utf8)
+  ([Unlicense](https://github.com/AmplOS2/branchless-utf8/blob/master/UNLICENSE))
+- [Unifont](http://unifoundry.com/unifont/)
+  ([GPLv2, optionally with the GNU font embedding exception, or OFLv1.1](http://unifoundry.com/LICENSE.txt),
+  we'd prefer the latter)
+
+\*code = data ⇒ fonts ∈ code
+
 ## TODO / Roadmap
 
 AmplOS already does some great things, but there's still a lot to do:
@@ -74,8 +89,8 @@ AmplOS already does some great things, but there's still a lot to do:
 - Some File System (probably [FAT](https://github.com/AmplOS2/ampfat))
 - `amport` on macOS and Linux
 - USB support
-- Port a C library (probably `dietlibc`) and compiler (`clang`, `gcc`, `lcc`,
-  ...)
+- Port a C library (probably `dietlibc`, maybe `musl`) and compiler (`clang`,
+  `gcc`, `lcc`, ...)
 - Users/Groups
 - `amport` on AmplOS
 - Port a shell (`ash`, `dash`, `ksh`, ...) and editor (`nano`, `ed`,
